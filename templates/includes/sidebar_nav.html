@@ -1,0 +1,41 @@
+<a href="{% url 'dashboard:index' %}" class="group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all {% if request.resolver_match.app_name == 'dashboard' %}bg-white/10 text-white shadow-sm{% else %}text-zinc-500 hover:text-white hover:bg-white/5{% endif %}">
+    <svg class="mr-3 h-5 w-5 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+    </svg>
+    Dashboard
+</a>
+
+<a href="{% url 'dashboard:reports' %}" class="group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all {% if request.resolver_match.view_name == 'dashboard:reports' %}bg-white/10 text-white shadow-sm{% else %}text-zinc-500 hover:text-white hover:bg-white/5{% endif %}">
+    <svg class="mr-3 h-5 w-5 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+    </svg>
+    Reports
+</a>
+
+<a href="{% url 'inventory:list' %}" class="group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all {% if request.resolver_match.app_name == 'inventory' %}bg-white/10 text-white shadow-sm{% else %}text-zinc-500 hover:text-white hover:bg-white/5{% endif %}">
+    <svg class="mr-3 h-5 w-5 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+    </svg>
+    Inventory
+</a>
+
+<a href="{% url 'finance:transactions' %}" class="group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all {% if request.resolver_match.app_name == 'finance' %}bg-white/10 text-white shadow-sm{% else %}text-zinc-500 hover:text-white hover:bg-white/5{% endif %}">
+    <svg class="mr-3 h-5 w-5 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+    </svg>
+    Finance
+</a>
+
+<a href="{% url 'automation:alerts' %}" class="group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all {% if request.resolver_match.app_name == 'automation' %}bg-white/10 text-white shadow-sm{% else %}text-zinc-500 hover:text-white hover:bg-white/5{% endif %}">
+    <svg class="mr-3 h-5 w-5 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+    </svg>
+    Alerts
+</a>
+
+<a href="{% url 'accounts:profile' %}" class="group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all {% if request.resolver_match.view_name == 'accounts:profile' %}bg-white/10 text-white shadow-sm{% else %}text-zinc-500 hover:text-white hover:bg-white/5{% endif %}">
+    <svg class="mr-3 h-5 w-5 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+    </svg>
+    Business Profile
+</a>

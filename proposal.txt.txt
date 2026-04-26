@@ -1,0 +1,253 @@
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+AMNA ASLAM 
+4538-FOC/BSSE/F22-B 
+ 
+SHAHZADI RANIA 
+4370-FOC/BSSE/F22-B 
+ 
+ 
+ 
+ 
+Faculty of Computing & Information Technology 
+Department of Software Engineering 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+FINAL YEAR PROJECT 
+PROPOSAL 
+TOPIC: 
+Biz-ight 
+ 
+GROUP MEMBERS 
+AMNA ASLAM 
+4538-FOC/BSSE/F22-B 
+amna.bsse4538@iiu.edu.pk 
+ 
+SHAHZADI RANIA 
+4370-FOC/BSSE/F22-B 
+shahzadi.bsse4370@iiu.edu.pk 
+ 
+FALL-2025 
+ 
+09/29/2025
+ 
+ 
+Introduction 
+The software engineering Final Year Project Biz-ight aims to create a decision support and 
+automation dashboard which will support micro and home-based businesses. The project 
+helps small business owners to control their sales operations and inventory management and 
+pricing strategies and expense tracking while enabling them to make decisions based on data 
+analysis. 
+ The project requires students to create an innovative software system that solves real-world 
+problems which micro-entrepreneurs face when they operate their businesses through social 
+media platforms and basic e-commerce websites. 
+ These businesses often rely on manual record-keeping and intuition-based decisions, which 
+leads to inefficiencies and financial losses. Biz-ight combines operational e-commerce 
+system data with its decision support system and automation processes and AI-based 
+explanations to generate operational insights. 
+Objective 
+The main goals of this project are: 
+• To create a web-based decision support dashboard which will assist micro-businesses 
+in their business operations  
+• To achieve automatic sales and inventory and expense monitoring through system 
+integration  
+• To deliver rule-based business insights which will guide pricing and inventory 
+control and expense tracking  
+• To enable decision-making through AI-based summary and explanation systems 
+• To test system performance in decreasing manual tasks while enhancing business 
+decision-making processes. 
+Background/Existing System 
+Micro-businesses depend on social media networks and basic e-commerce platforms to 
+operate their sales activities. The platforms enable users to perform transactions but they 
+mainly concentrate on processing orders and maintaining records instead of assisting with 
+business analysis and decision-making tasks. 
+ Businesses encounter difficulties because existing inventory management and accounting 
+software solutions:  
+• Present excessive technical difficulties which non-technical users cannot handle 
+• Targeting enterprise customers  
+• Provide static reports which do not deliver operational recommendations 
+ Business owners encounter difficulties because they need to deal with: 
+• Unreliable methods for establishing product prices 
+• Insufficient methods for managing their stock. Their operational costs which they 
+must manage remain hidden 
+• They make decisions based on immediate requirements instead of planning ahead  
+ 
+ 
+Small business owners show increasing interest in simplified automated intelligent systems 
+which deliver business functions dedicated to their needs according to market patterns.  
+The available solutions fail to support decision-making processes because they either use 
+non-transparent artificial intelligence systems or they do not present accessible decision
+making solutions to small business operations. The integrated platform unites rule-based 
+decision support with workflow automation and AI-based explanation capabilities to solve 
+existing system deficiencies. 
+ 
+Proposed Solution 
+The proposed solution is a decision support and automation system integrated with an e
+commerce website. The system collects sales and inventory data through APIs or webhooks 
+and processes it using predefined business rules. 
+The solution follows a layered approach: 
+ 
+Data Integration Layer 
+• Receives sales events from the e-commerce system 
+• Updates inventory and transaction records 
+Decision Support Layer 
+These KPIs form the basis of rule-based recommendations. 
+Key Performance Indicators: 
+ 
+• Revenue Growth Rate (RGR) 
+RGR = (Revenue_current − Revenue_previous) / Revenue_previous 
+• Inventory Turnover Ratio (ITR) 
+ITR = Cost of Goods Sold / Average Inventory 
+• Expense Ratio (ER) 
+ER = Total Expenses / Total Revenue 
+• Stock Coverage Period (SCP) 
+SCP = Current Stock / Daily Sales Rate 
+ 
+Rule-Based Evaluation Examples 
+The system applies deterministic rule conditions such as: 
+• If Current Stock < Reorder Threshold → Low Stock Alert 
+• If Stock Coverage Period < 3 days → Urgent Reorder Recommendation 
+• If Inventory Turnover Ratio < 1.5 → Slow-Moving Inventory Warning 
+• If Expense Ratio > 0.6 → Expense Spike Warning 
+• If Revenue Growth Rate < -0.1 → Sales Decline Alert 
+Threshold values are configurable and may be adjusted based on business category. 
+ 
+Business Health Score 
+The overall business performance is aggregated into a Business Health Score (BHS): 
+ 
+ 𝐻𝑆=0.4(𝐼𝑇𝑅𝑛𝑜𝑟𝑚)+0.35(𝑅𝐺𝑅𝑛𝑜𝑟𝑚)+0.25(1−𝐸𝑅𝑛𝑜𝑟𝑚) 
+ 
+ 
+ 
+All KPI values are normalized between 0 and 1 before aggregation to ensure balanced 
+contribution to the final score. 
+ 
+AI-Assisted Explanation Layer: 
+ 
+The AI-Assisted Explanation Layer does not make business decisions. The rule-based 
+Decision Support Engine generates all decision outcomes. This layer exists to transform 
+structured system outputs into understandable explanations that non-technical business users 
+can comprehend.  
+The AI module receives predefined KPI values and triggered rule outputs from the decision 
+engine. Structured prompt templates are used to develop explanations that match system
+calculated metrics while avoiding any external assumptions.  
+The Appendix section contains a system block diagram which shows how data flows 
+between different system components. 
+ 
+Project Scope 
+In-Scope 
+• Integration with an e-commerce website for sales data collection 
+• Inventory and expense management 
+• Rule-based pricing and inventory decision support 
+• Business health score calculation 
+• Automation of alerts and reports 
+• AI-assisted explanation of system recommendations 
+ 
+Out-of-Scope 
+• Payment processing 
+• Logistics and shipping management 
+• Tax filing and legal compliance 
+• Multi-vendor marketplace support 
+• Native mobile application development 
+ 
+Project Features 
+Admin / Business Owner Role 
+ 
+• Product and inventory management 
+• Sales and expense logging 
+• Dashboard visualization of KPIs 
+• Pricing and inventory recommendations 
+• Automated alerts (low stock, slow-moving items, expense spikes) 
+• Monthly business summary with AI-assisted explanation 
+ 
+ 
+A comprehensive use case model of the proposed system is included in the Appendix 
+section. 
+Solution Application Areas 
+The proposed system is applicable in the following areas: 
+• Micro and home-based businesses 
+• Handmade crafts and jewelry businesses 
+• Small clothing brands 
+• Home-based food businesses 
+• Social media-driven e-commerce operations 
+Benefits 
+• Reduced administrative workload 
+• Improved pricing consistency 
+• Better inventory control 
+• Early detection of expense inefficiencies 
+• Accessible business insights for non-technical users 
+The project targets the small business and e-commerce software domain, addressing a 
+practical and growing market need. 
+Tools/Technology 
+• Backend Framework: Django (Python) 
+• Database: PostgreSQL 
+• Frontend: Django Templates with Bootstrap 5 
+• Data Visualization: Chart.js 
+• Background Task Processing: Celery with Redis 
+• AI Integration: External AI API (REST-based) 
+• Version Control: Git & GitHub 
+• Development Environment: Visual Studio Code 
+ 
+References 
+• Power, D. J. (2002). Decision Support Systems: Concepts and Resources for 
+Managers. Greenwood Publishing. 
+• Turban, E., Sharda, R., & Delen, D. (2011). Decision Support and Business 
+Intelligence Systems. Pearson. 
+• Laudon, K. C., & Laudon, J. P. (2020). Management Information Systems. Pearson. 
+• Official documentation of Flask, n8n, and REST APIs. 
+•   Brynjolfsson, E., & McElheran, K. (2019). Data in Action: Data-Driven Decision 
+Making in U.S. Manufacturing. 
+•  Ribeiro, M. T., Singh, S., & Guestrin, C. (2016). “Why Should I Trust You?” 
+Explaining the Predictions of Any Classifier. 
+• OECD (2021). Digital Transformation of SMEs. 
+ 
+ 
+ 
+Appendices  
+• System architecture diagram 
+• Data flow diagram 
+• Use case diagram 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+USECASE DIAGRAM: 
+ 
+ 
+ 
+SYSTEM ARCHITECTURE DIAGRAM: 
+ 
+ 
+ 
+ 
+ 
+ 
+DATAFLOW DIAGRAM: 
+ 

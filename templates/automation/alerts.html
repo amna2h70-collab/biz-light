@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Alert Center | Biz-ight AI{% endblock %}
+{% block page_title %}Alert Center{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto space-y-8">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-3xl font-black text-zinc-950 tracking-tight">System Alerts</h1>
+            <p class="text-zinc-500 mt-1">Intelligent notifications from your AI co-manager.</p>
+        </div>
+        <div class="flex gap-2">
+            <span class="bg-zinc-100 text-zinc-500 text-[10px] font-black px-3 py-1.5 rounded-lg uppercase tracking-widest">{{ alerts|length }} Total</span>
+        </div>
+    </div>
+
+    <!-- Alert List -->
+    <div class="space-y-4">
+        {% for alert in alerts %}
+        <div class="bg-white rounded-3xl border border-zinc-200/60 shadow-sm hover:shadow-md transition-all p-6 relative overflow-hidden group">
+            {% if alert.severity == 'HIGH' or alert.severity == 'CRITICAL' %}
+                <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-red-500"></div>
+            {% elif alert.severity == 'MEDIUM' %}
+                <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-amber-500"></div>
+            {% else %}
+                <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-sky-500"></div>
+            {% endif %}
+
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div class="flex items-start gap-5">
+                    <div class="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 {% if alert.severity == 'HIGH' or alert.severity == 'CRITICAL' %}bg-red-50 text-red-600{% elif alert.severity == 'MEDIUM' %}bg-amber-50 text-amber-600{% else %}bg-sky-50 text-sky-600{% endif %}">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-black text-zinc-950 mb-1 leading-snug">{{ alert.message }}</h3>
+                        <div class="flex flex-wrap items-center gap-3">
+                            <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">{{ alert.timestamp|date:"M d, H:i" }}</span>
+                            <span class="w-1 h-1 rounded-full bg-zinc-200"></span>
+                            <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">{{ alert.type }}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-3 md:border-l md:border-zinc-100 md:pl-6">
+                    <span class="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-lg {% if alert.severity == 'HIGH' or alert.severity == 'CRITICAL' %}bg-red-50 text-red-700 border border-red-100{% elif alert.severity == 'MEDIUM' %}bg-amber-50 text-amber-700 border border-amber-100{% else %}bg-sky-50 text-sky-700 border border-sky-100{% endif %}">
+                        {{ alert.severity }}
+                    </span>
+                    {% if not alert.is_resolved %}
+                        <span class="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-lg bg-zinc-100 text-zinc-500 border border-zinc-200">Unresolved</span>
+                        <a href="{% url 'automation:resolve_alert' alert.id %}" class="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-lg bg-zinc-950 text-white hover:bg-zinc-800 transition-colors">Mark Resolved</a>
+                    {% else %}
+                        <span class="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-100">Resolved</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="bg-white rounded-[3rem] border border-zinc-200/60 p-20 text-center">
+            <div class="flex flex-col items-center opacity-20">
+                <svg class="w-20 h-20 mb-6 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <h3 class="text-2xl font-black text-zinc-950">Quiet Day</h3>
+                <p class="text-sm font-bold mt-1">No alerts found. Everything is operating at peak efficiency.</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
