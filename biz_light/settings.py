@@ -36,7 +36,7 @@ DEBUG = os.getenv('DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://biz-ligth-ai-comanager-for-the-micr.vercel.app',
+    'https://biz-light.vercel.app/',
     'https://*.vercel.app'
 ]
 
