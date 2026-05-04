@@ -75,4 +75,4 @@ Password: demo1234
 check the proposal.txt and check i all the requirement o the proect are done or not and tell me which needs to be implmented yet    also i have updated the new api key for gemini  its  still gives rate limit issue after retrying multiple times  it may be some other issue resolve it ---- also the alert in the dashboard and the alterpage are not update when i update the inventory they should update like done or resolved also all pages should be update according to the inomation 
 
 test every thing ater the changes and tell me if every thing is working fine
->>>>>>> eb8a424 (code)
+>>>>>>> eb8a424 (code).
