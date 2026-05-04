@@ -24,9 +24,11 @@ class AnalyticsService:
         now = timezone.now()
         
         if period == 'daily':
-            period_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
-            prev_period_start = period_start - timedelta(days=1)
-            days_in_period = 1
+            # Use a rolling 7-day window so BHS reflects recent activity,
+            # not just today (which may have zero sales).
+            period_start = now.replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=6)
+            prev_period_start = period_start - timedelta(days=7)
+            days_in_period = 7
         elif period == 'weekly':
             period_start = now.replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=7)
             prev_period_start = period_start - timedelta(days=7)

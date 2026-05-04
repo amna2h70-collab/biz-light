@@ -13,16 +13,27 @@
         </div>
         <div class="flex items-center gap-3">
             <div class="flex items-center bg-zinc-100 rounded-xl p-1 mr-4">
-                <a href="{% url 'finance:transactions' %}?period=daily" class="px-4 py-2 text-xs font-bold rounded-lg transition-all {% if current_period == 'daily' %}bg-white text-zinc-900 shadow-sm{% else %}text-zinc-500 hover:text-zinc-900{% endif %}">Daily</a>
-                <a href="{% url 'finance:transactions' %}?period=monthly" class="px-4 py-2 text-xs font-bold rounded-lg transition-all {% if current_period == 'monthly' %}bg-white text-zinc-900 shadow-sm{% else %}text-zinc-500 hover:text-zinc-900{% endif %}">Monthly</a>
-                <a href="{% url 'finance:transactions' %}?period=all" class="px-4 py-2 text-xs font-bold rounded-lg transition-all {% if current_period == 'all' %}bg-white text-zinc-900 shadow-sm{% else %}text-zinc-500 hover:text-zinc-900{% endif %}">All Time</a>
+                <a href="{% url 'finance:transactions' %}?period=daily"
+                    class="px-4 py-2 text-xs font-bold rounded-lg transition-all {% if current_period == 'daily' %}bg-white text-zinc-900 shadow-sm{% else %}text-zinc-500 hover:text-zinc-900{% endif %}">Daily</a>
+                <a href="{% url 'finance:transactions' %}?period=monthly"
+                    class="px-4 py-2 text-xs font-bold rounded-lg transition-all {% if current_period == 'monthly' %}bg-white text-zinc-900 shadow-sm{% else %}text-zinc-500 hover:text-zinc-900{% endif %}">Monthly</a>
+                <a href="{% url 'finance:transactions' %}?period=all"
+                    class="px-4 py-2 text-xs font-bold rounded-lg transition-all {% if current_period == 'all' %}bg-white text-zinc-900 shadow-sm{% else %}text-zinc-500 hover:text-zinc-900{% endif %}">All
+                    Time</a>
             </div>
-            <button onclick="document.getElementById('saleModal').classList.remove('hidden')" class="bg-zinc-950 text-white px-6 py-3 rounded-xl text-sm font-bold hover:bg-zinc-800 transition-all shadow-xl shadow-zinc-200 flex items-center gap-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+            <button onclick="document.getElementById('saleModal').classList.remove('hidden')"
+                class="bg-zinc-950 text-white px-6 py-3 rounded-xl text-sm font-bold hover:bg-zinc-800 transition-all shadow-xl shadow-zinc-200 flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
                 Log Sale
             </button>
-            <button onclick="document.getElementById('expenseModal').classList.remove('hidden')" class="bg-white border border-zinc-200 text-zinc-700 px-6 py-3 rounded-xl text-sm font-bold hover:bg-zinc-50 transition-all flex items-center gap-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path></svg>
+            <button onclick="document.getElementById('expenseModal').classList.remove('hidden')"
+                class="bg-white border border-zinc-200 text-zinc-700 px-6 py-3 rounded-xl text-sm font-bold hover:bg-zinc-50 transition-all flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+                </svg>
                 Log Expense
             </button>
         </div>
@@ -33,14 +44,14 @@
         <div class="bg-white p-8 rounded-3xl border border-zinc-200/60 shadow-sm group">
             <dt class="text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-4">Total Revenue</dt>
             <dd class="flex items-baseline gap-2">
-                <span class="text-4xl font-black text-emerald-600 tracking-tighter">${{ total_sales|floatformat:0 }}</span>
+                <span class="text-4xl font-black text-emerald-600 tracking-tighter">PKR {{ total_sales|floatformat:0 }}</span>
                 <span class="text-xs font-bold text-zinc-400">gross</span>
             </dd>
         </div>
         <div class="bg-white p-8 rounded-3xl border border-zinc-200/60 shadow-sm group">
             <dt class="text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-4">Total Expenses</dt>
             <dd class="flex items-baseline gap-2">
-                <span class="text-4xl font-black text-red-600 tracking-tighter">${{ total_expenses|floatformat:0 }}</span>
+                <span class="text-4xl font-black text-red-600 tracking-tighter">PKR {{ total_expenses|floatformat:0 }}</span>
                 <span class="text-xs font-bold text-zinc-400">operational</span>
             </dd>
         </div>
@@ -48,7 +59,7 @@
             <div class="absolute top-0 right-0 w-24 h-24 bg-sky-500/10 rounded-full blur-2xl -mr-8 -mt-8"></div>
             <dt class="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-4">Net Profit</dt>
             <dd class="flex items-baseline gap-2 relative z-10">
-                <span class="text-4xl font-black text-white tracking-tighter">${{ net_profit|floatformat:0 }}</span>
+                <span class="text-4xl font-black text-white tracking-tighter">PKR {{ net_profit|floatformat:0 }}</span>
                 <span class="text-xs font-bold text-zinc-500">take-home</span>
             </dd>
         </div>
@@ -66,20 +77,31 @@
                 <table class="min-w-full divide-y divide-zinc-100">
                     <thead class="bg-zinc-50/50">
                         <tr>
-                            <th class="px-6 py-4 text-left text-[10px] font-black text-zinc-400 uppercase tracking-widest">Product</th>
-                            <th class="px-6 py-4 text-left text-[10px] font-black text-zinc-400 uppercase tracking-widest">Date</th>
-                            <th class="px-6 py-4 text-left text-[10px] font-black text-zinc-400 uppercase tracking-widest">Qty</th>
-                            <th class="px-6 py-4 text-right text-[10px] font-black text-zinc-400 uppercase tracking-widest">Amount</th>
+                            <th
+                                class="px-6 py-4 text-left text-[10px] font-black text-zinc-400 uppercase tracking-widest">
+                                Product</th>
+                            <th
+                                class="px-6 py-4 text-left text-[10px] font-black text-zinc-400 uppercase tracking-widest">
+                                Date</th>
+                            <th
+                                class="px-6 py-4 text-left text-[10px] font-black text-zinc-400 uppercase tracking-widest">
+                                Qty</th>
+                            <th
+                                class="px-6 py-4 text-right text-[10px] font-black text-zinc-400 uppercase tracking-widest">
+                                Amount</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-zinc-100 bg-white">
                         {% for t in transactions %}
                         {% if t.type == 'SALE' %}
                         <tr class="hover:bg-zinc-50/50 transition-colors">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-zinc-900">{{ t.product.name }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-zinc-900">{{ t.product.name }}
+                            </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-zinc-500">{{ t.timestamp|date:"M d, Y" }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-zinc-500">{{ t.quantity }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-black text-emerald-600 text-right">${{ t.total_amount }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-zinc-500">{{ t.quantity }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-black text-emerald-600 text-right">PKR
+                                {{ t.total_amount }}</td>
                         </tr>
                         {% endif %}
                         {% endfor %}
@@ -98,17 +120,25 @@
                 <table class="min-w-full divide-y divide-zinc-100">
                     <thead class="bg-zinc-50/50">
                         <tr>
-                            <th class="px-6 py-4 text-left text-[10px] font-black text-zinc-400 uppercase tracking-widest">Category</th>
-                            <th class="px-6 py-4 text-left text-[10px] font-black text-zinc-400 uppercase tracking-widest">Date</th>
-                            <th class="px-6 py-4 text-right text-[10px] font-black text-zinc-400 uppercase tracking-widest">Amount</th>
+                            <th
+                                class="px-6 py-4 text-left text-[10px] font-black text-zinc-400 uppercase tracking-widest">
+                                Category</th>
+                            <th
+                                class="px-6 py-4 text-left text-[10px] font-black text-zinc-400 uppercase tracking-widest">
+                                Date</th>
+                            <th
+                                class="px-6 py-4 text-right text-[10px] font-black text-zinc-400 uppercase tracking-widest">
+                                Amount</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-zinc-100 bg-white">
                         {% for e in expenses %}
                         <tr class="hover:bg-zinc-50/50 transition-colors">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-zinc-900">{{ e.category }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-zinc-500">{{ e.date|date:"M d, Y" }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-black text-red-600 text-right">${{ e.amount }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-zinc-900">{{ e.category }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-zinc-500">{{ e.date|date:"M d,
+                                Y" }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-black text-red-600 text-right">PKR {{ e.amount }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -127,20 +157,27 @@
             <form action="{% url 'finance:log_sale' %}" method="POST" class="space-y-6">
                 {% csrf_token %}
                 <div>
-                    <label class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">Select Product</label>
-                    <select name="product_id" required class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
+                    <label class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">Select
+                        Product</label>
+                    <select name="product_id" required
+                        class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
                         {% for p in products %}
-                        <option value="{{ p.id }}">{{ p.name }} - ${{ p.price }}</option>
+                        <option value="{{ p.id }}">{{ p.name }} - PKR {{ p.price }}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">Quantity Sold</label>
-                    <input type="number" name="quantity" min="1" required placeholder="1" class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
+                    <label class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">Quantity
+                        Sold</label>
+                    <input type="number" name="quantity" min="1" required placeholder="1"
+                        class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
                 </div>
                 <div class="flex gap-4 pt-4">
-                    <button type="button" onclick="document.getElementById('saleModal').classList.add('hidden')" class="flex-1 bg-zinc-100 text-zinc-600 py-4 rounded-2xl font-bold hover:bg-zinc-200 transition-all">Cancel</button>
-                    <button type="submit" class="flex-1 bg-zinc-950 text-white py-4 rounded-2xl font-bold hover:bg-zinc-800 transition-all">Record Sale</button>
+                    <button type="button" onclick="document.getElementById('saleModal').classList.add('hidden')"
+                        class="flex-1 bg-zinc-100 text-zinc-600 py-4 rounded-2xl font-bold hover:bg-zinc-200 transition-all">Cancel</button>
+                    <button type="submit"
+                        class="flex-1 bg-zinc-950 text-white py-4 rounded-2xl font-bold hover:bg-zinc-800 transition-all">Record
+                        Sale</button>
                 </div>
             </form>
         </div>
@@ -157,25 +194,36 @@
                 {% csrf_token %}
                 <div class="grid grid-cols-2 gap-6">
                     <div class="col-span-2">
-                        <label class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">Category</label>
-                        <input type="text" name="category" placeholder="e.g. Rent, Utilities" required class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
+                        <label
+                            class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">Category</label>
+                        <input type="text" name="category" placeholder="e.g. Rent, Utilities" required
+                            class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
                     </div>
                     <div>
-                        <label class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">Amount ($)</label>
-                        <input type="number" step="0.01" name="amount" required placeholder="0.00" class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
+                        <label class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">Amount
+                            (PKR)</label>
+                        <input type="number" step="0.01" name="amount" required placeholder="0.00"
+                            class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
                     </div>
                     <div>
-                        <label class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">Date</label>
-                        <input type="date" name="date" required class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
+                        <label
+                            class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">Date</label>
+                        <input type="date" name="date" required
+                            class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
                     </div>
                     <div class="col-span-2">
-                        <label class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">Description</label>
-                        <textarea name="description" rows="2" placeholder="Brief details about this expense..." class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900"></textarea>
+                        <label
+                            class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">Description</label>
+                        <textarea name="description" rows="2" placeholder="Brief details about this expense..."
+                            class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900"></textarea>
                     </div>
                 </div>
                 <div class="flex gap-4 pt-4">
-                    <button type="button" onclick="document.getElementById('expenseModal').classList.add('hidden')" class="flex-1 bg-zinc-100 text-zinc-600 py-4 rounded-2xl font-bold hover:bg-zinc-200 transition-all">Cancel</button>
-                    <button type="submit" class="flex-1 bg-zinc-950 text-white py-4 rounded-2xl font-bold hover:bg-zinc-800 transition-all">Record Expense</button>
+                    <button type="button" onclick="document.getElementById('expenseModal').classList.add('hidden')"
+                        class="flex-1 bg-zinc-100 text-zinc-600 py-4 rounded-2xl font-bold hover:bg-zinc-200 transition-all">Cancel</button>
+                    <button type="submit"
+                        class="flex-1 bg-zinc-950 text-white py-4 rounded-2xl font-bold hover:bg-zinc-800 transition-all">Record
+                        Expense</button>
                 </div>
             </form>
         </div>

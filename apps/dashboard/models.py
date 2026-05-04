@@ -28,3 +28,22 @@ class KPISnapshot(models.Model):
 
     class Meta:
         ordering = ['-timestamp']
+
+class StoreIntegration(models.Model):
+    PLATFORM_CHOICES = [
+        ('custom', 'Custom API (WonderToyz / JSON Server)'),
+        ('shopify', 'Shopify'),
+        ('woocommerce', 'WooCommerce'),
+        ('daraz', 'Daraz'),
+    ]
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='store_integration')
+    store_name = models.CharField(max_length=255, default='My Store')
+    platform_type = models.CharField(max_length=20, choices=PLATFORM_CHOICES, default='custom')
+    store_url = models.URLField(help_text="e.g. http://localhost:3001/orders")
+    api_key = models.CharField(max_length=255, help_text="Your secret API Key")
+    created_at = models.DateTimeField(auto_now_add=True)
+    last_synced = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.store_name} ({self.get_platform_type_display()})"

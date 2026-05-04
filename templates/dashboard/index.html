@@ -12,16 +12,35 @@
             <p class="text-zinc-500 mt-1">Real-time intelligence for your micro-business.</p>
         </div>
         <div class="flex items-center gap-3">
-            <a href="{% url 'dashboard:index' %}?refresh=true" class="bg-white border border-zinc-200 text-zinc-600 px-6 py-3 rounded-xl text-sm font-bold hover:bg-zinc-50 transition-all flex items-center gap-2">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+            <a href="{% url 'dashboard:index' %}?refresh=true"
+                class="bg-white border border-zinc-200 text-zinc-600 px-6 py-3 rounded-xl text-sm font-bold hover:bg-zinc-50 transition-all flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                    </path>
+                </svg>
                 Refresh AI Insights
             </a>
-            <button class="bg-white border border-zinc-200 text-zinc-700 px-4 py-2.5 rounded-xl text-sm font-bold hover:bg-zinc-50 transition-all flex items-center gap-2">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+            <a href="{% url 'dashboard:sync_store' %}"
+                class="bg-indigo-600 text-white px-4 py-2.5 rounded-xl text-sm font-bold hover:bg-indigo-500 transition-all flex items-center gap-2 shadow-md">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                    </path>
+                </svg>
+                Sync Store Data
+            </a>
+            <a href="{% url 'dashboard:export_pdf' %}" target="_blank"
+                class="bg-white border border-zinc-200 text-zinc-700 px-4 py-2.5 rounded-xl text-sm font-bold hover:bg-zinc-50 transition-all flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                </svg>
                 Export PDF
-            </button>
+            </a>
             <div class="flex items-center bg-zinc-950 rounded-xl p-1 shadow-xl shadow-zinc-200">
-                <a href="{% url 'dashboard:index' %}?refresh=true" class="text-white px-4 py-1.5 rounded-lg text-xs font-bold bg-white/20 transition-all hover:bg-white/30">
+                <a href="{% url 'dashboard:reports' %}?generate=true"
+                    class="text-white px-4 py-1.5 rounded-lg text-xs font-bold bg-white/20 transition-all hover:bg-white/30">
                     Generate Report
                 </a>
             </div>
@@ -32,62 +51,89 @@
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <!-- Health Score Card -->
         <div class="bg-white p-6 rounded-2xl border border-zinc-200/60 shadow-sm relative overflow-hidden group">
-            <div class="absolute top-0 right-0 w-24 h-24 bg-sky-500/5 rounded-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
-            <dt class="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-1" title="Overall health of your business based on sales and expenses">Business Health Score</dt>
+            <div
+                class="absolute top-0 right-0 w-24 h-24 bg-sky-500/5 rounded-full -mr-8 -mt-8 transition-transform group-hover:scale-110">
+            </div>
+            <dt class="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-1"
+                title="Overall health of your business based on sales and expenses">Business Health Score</dt>
             <p class="text-[10px] text-zinc-400 mb-3">Overall performance rating (0-100)</p>
             <dd class="flex items-end justify-between">
                 <div>
-                    <span class="text-4xl font-black text-zinc-950 tracking-tighter">{{ snapshot.bhs }}</span>
+                    <span class="text-4xl font-black text-zinc-950 tracking-tighter">{{snapshot.bhs }}</span>
                     <span class="text-xs font-bold text-zinc-500">/ 100</span>
                 </div>
                 <div class="p-2 bg-sky-50 rounded-xl">
-                    <svg class="w-6 h-6 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <svg class="w-6 h-6 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
                 </div>
             </dd>
         </div>
 
         <!-- Revenue Growth Card -->
         <div class="bg-white p-6 rounded-2xl border border-zinc-200/60 shadow-sm relative overflow-hidden group">
-            <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
-            <dt class="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-1" title="How much your sales increased compared to the last period">Revenue Growth Rate</dt>
+            <div
+                class="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full -mr-8 -mt-8 transition-transform group-hover:scale-110">
+            </div>
+            <dt class="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-1"
+                title="How much your sales increased compared to the last period">Revenue Growth Rate</dt>
             <p class="text-[10px] text-zinc-400 mb-3">Sales increase vs previous period</p>
             <dd class="flex items-end justify-between">
                 <div>
                     <span class="text-4xl font-black text-zinc-950 tracking-tighter">{{ snapshot.rgr_percentage|floatformat:1 }}%</span>
                 </div>
                 <div class="p-2 bg-emerald-50 rounded-xl">
-                    <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                    <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                    </svg>
                 </div>
             </dd>
         </div>
 
         <!-- Inventory Turnover Card -->
         <div class="bg-white p-6 rounded-2xl border border-zinc-200/60 shadow-sm relative overflow-hidden group">
-            <div class="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
-            <dt class="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-1" title="How fast you are selling your inventory (higher is better)">Inventory Turnover Ratio</dt>
+            <div
+                class="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-full -mr-8 -mt-8 transition-transform group-hover:scale-110">
+            </div>
+            <dt class="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-1"
+                title="How fast you are selling your inventory (higher is better)">Inventory Turnover Ratio</dt>
             <p class="text-[10px] text-zinc-400 mb-3">How fast you sell your stock</p>
             <dd class="flex items-end justify-between">
                 <div>
-                    <span class="text-4xl font-black text-zinc-950 tracking-tighter">{{ snapshot.itr|floatformat:1 }}x</span>
+                    <span
+                        class="text-4xl font-black text-zinc-950 tracking-tighter">{{snapshot.itr|floatformat:1}}x</span>
                 </div>
                 <div class="p-2 bg-indigo-50 rounded-xl">
-                    <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                        </path>
+                    </svg>
                 </div>
             </dd>
         </div>
 
         <!-- Stock Coverage Card -->
         <div class="bg-white p-6 rounded-2xl border border-zinc-200/60 shadow-sm relative overflow-hidden group">
-            <div class="absolute top-0 right-0 w-24 h-24 bg-orange-500/5 rounded-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
-            <dt class="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-1" title="Estimated days until you run out of stock based on average sales">Stock Coverage Period</dt>
+            <div
+                class="absolute top-0 right-0 w-24 h-24 bg-orange-500/5 rounded-full -mr-8 -mt-8 transition-transform group-hover:scale-110">
+            </div>
+            <dt class="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-1"
+                title="Estimated days until you run out of stock based on average sales">Stock Coverage Period</dt>
             <p class="text-[10px] text-zinc-400 mb-3">Days until stock runs out</p>
             <dd class="flex items-end justify-between">
                 <div>
-                    <span class="text-4xl font-black text-zinc-950 tracking-tighter">{{ snapshot.scp|floatformat:0 }}</span>
+                    <span
+                        class="text-4xl font-black text-zinc-950 tracking-tighter">{{snapshot.scp|floatformat:0}}</span>
                     <span class="text-xs font-bold text-zinc-500">days</span>
                 </div>
                 <div class="p-2 bg-orange-50 rounded-xl">
-                    <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
                 </div>
             </dd>
         </div>
@@ -98,11 +144,15 @@
         <!-- AI Panel -->
         <div class="lg:col-span-1 flex flex-col gap-8">
             <div class="bg-zinc-950 rounded-3xl p-8 border border-white/10 shadow-2xl relative overflow-hidden flex-1">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-sky-500/10 rounded-full blur-[60px] -mr-16 -mt-16"></div>
+                <div class="absolute top-0 right-0 w-32 h-32 bg-sky-500/10 rounded-full blur-[60px] -mr-16 -mt-16">
+                </div>
                 <div class="relative z-10">
                     <h3 class="text-xl font-black text-white mb-6 flex items-center gap-3">
                         <div class="w-8 h-8 bg-sky-500 rounded-lg flex items-center justify-center">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
                         </div>
                         Strategic Insight
                     </h3>
@@ -116,19 +166,26 @@
             <div class="bg-white rounded-3xl border border-zinc-200/60 shadow-sm flex flex-col h-[400px]">
                 <div class="p-6 border-b border-zinc-100 flex items-center justify-between">
                     <h3 class="font-black text-zinc-950">Action Items</h3>
-                    <span class="bg-zinc-100 text-zinc-500 text-[10px] font-bold px-2 py-1 rounded-lg uppercase tracking-widest">{{ alerts|length }} New</span>
+                    <span
+                        class="bg-zinc-100 text-zinc-500 text-[10px] font-bold px-2 py-1 rounded-lg uppercase tracking-widest">{{ alerts|length }} New</span>
                 </div>
                 <div class="flex-1 p-6 space-y-4 overflow-y-auto">
                     {% for alert in alerts %}
-                    <div class="flex gap-4 p-4 rounded-2xl {% if alert.severity == 'HIGH' or alert.severity == 'CRITICAL' %}bg-red-50/50 border border-red-100{% else %}bg-zinc-50 border border-zinc-100{% endif %}">
+                    <div
+                        class="flex gap-4 p-4 rounded-2xl {% if alert.severity == 'HIGH' or alert.severity == 'CRITICAL' %}bg-red-50/50 border border-red-100{% else %}bg-zinc-50 border border-zinc-100{% endif %}">
                         <div class="flex-shrink-0 mt-0.5">
-                            <div class="w-2 h-2 rounded-full {% if alert.severity == 'HIGH' or alert.severity == 'CRITICAL' %}bg-red-500 animate-pulse{% else %}bg-zinc-400{% endif %}"></div>
+                            <div
+                                class="w-2 h-2 rounded-full {% if alert.severity == 'HIGH' or alert.severity == 'CRITICAL' %}bg-red-500 animate-pulse{% else %}bg-zinc-400{% endif %}">
+                            </div>
                         </div>
                         <p class="text-xs font-bold text-zinc-900 leading-snug">{{ alert.message }}</p>
                     </div>
                     {% empty %}
                     <div class="h-full flex flex-col items-center justify-center opacity-30 text-center">
-                        <svg class="w-12 h-12 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <svg class="w-12 h-12 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
                         <p class="text-sm font-bold">Systems Optimal</p>
                     </div>
                     {% endfor %}
@@ -145,8 +202,12 @@
                 </div>
                 <div class="flex items-center gap-4">
                     <div class="bg-zinc-100 p-1 rounded-lg flex">
-                        <button id="btnHealthDaily" class="px-3 py-1 text-xs font-bold rounded-md bg-white text-zinc-900 shadow-sm transition-all" onclick="toggleKpiChart('health', 'daily')">Daily</button>
-                        <button id="btnHealthMonthly" class="px-3 py-1 text-xs font-bold rounded-md text-zinc-500 hover:text-zinc-900 transition-all" onclick="toggleKpiChart('health', 'monthly')">Monthly</button>
+                        <button id="btnHealthDaily"
+                            class="px-3 py-1 text-xs font-bold rounded-md bg-white text-zinc-900 shadow-sm transition-all"
+                            onclick="toggleKpiChart('health', 'daily')">Daily</button>
+                        <button id="btnHealthMonthly"
+                            class="px-3 py-1 text-xs font-bold rounded-md text-zinc-500 hover:text-zinc-900 transition-all"
+                            onclick="toggleKpiChart('health', 'monthly')">Monthly</button>
                     </div>
                 </div>
             </div>
@@ -166,8 +227,12 @@
                 </div>
                 <div class="flex items-center gap-4">
                     <div class="bg-zinc-100 p-1 rounded-lg flex">
-                        <button id="btnFinanceDaily" class="px-3 py-1 text-xs font-bold rounded-md bg-white text-zinc-900 shadow-sm transition-all" onclick="toggleKpiChart('finance', 'daily')">Daily</button>
-                        <button id="btnFinanceMonthly" class="px-3 py-1 text-xs font-bold rounded-md text-zinc-500 hover:text-zinc-900 transition-all" onclick="toggleKpiChart('finance', 'monthly')">Monthly</button>
+                        <button id="btnFinanceDaily"
+                            class="px-3 py-1 text-xs font-bold rounded-md bg-white text-zinc-900 shadow-sm transition-all"
+                            onclick="toggleKpiChart('finance', 'daily')">Daily</button>
+                        <button id="btnFinanceMonthly"
+                            class="px-3 py-1 text-xs font-bold rounded-md text-zinc-500 hover:text-zinc-900 transition-all"
+                            onclick="toggleKpiChart('finance', 'monthly')">Monthly</button>
                     </div>
                     <div class="flex items-center gap-2">
                         <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
@@ -193,17 +258,23 @@
                 </div>
                 <div class="flex items-center gap-4">
                     <div class="bg-zinc-100 p-1 rounded-lg flex">
-                        <button id="btnStockDaily" class="px-3 py-1 text-xs font-bold rounded-md bg-white text-zinc-900 shadow-sm transition-all" onclick="toggleKpiChart('stock', 'daily')">Daily</button>
-                        <button id="btnStockMonthly" class="px-3 py-1 text-xs font-bold rounded-md text-zinc-500 hover:text-zinc-900 transition-all" onclick="toggleKpiChart('stock', 'monthly')">Monthly</button>
+                        <button id="btnStockDaily"
+                            class="px-3 py-1 text-xs font-bold rounded-md bg-white text-zinc-900 shadow-sm transition-all"
+                            onclick="toggleKpiChart('stock', 'daily')">Daily</button>
+                        <button id="btnStockMonthly"
+                            class="px-3 py-1 text-xs font-bold rounded-md text-zinc-500 hover:text-zinc-900 transition-all"
+                            onclick="toggleKpiChart('stock', 'monthly')">Monthly</button>
                     </div>
                     <div class="flex gap-4">
                         <div class="flex items-center gap-2 group cursor-help">
                             <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
-                            <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest" title="Inventory Turnover: How many times you've sold and replaced your inventory. Higher is better.">Turnover</span>
+                            <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest"
+                                title="Inventory Turnover: How many times you've sold and replaced your inventory. Higher is better.">Turnover</span>
                         </div>
                         <div class="flex items-center gap-2 group cursor-help">
                             <span class="w-2 h-2 border-2 border-dashed border-amber-500 rounded-full"></span>
-                            <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest" title="Stock Runway: The estimated number of days until you completely run out of stock based on average sales.">Runway</span>
+                            <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest"
+                                title="Stock Runway: The estimated number of days until you completely run out of stock based on average sales.">Runway</span>
                         </div>
                     </div>
                 </div>
@@ -251,8 +322,12 @@
                 </div>
                 <div class="flex gap-4 items-center">
                     <div class="bg-zinc-100 p-1 rounded-lg flex mr-4">
-                        <button id="btnDailyChart" class="px-3 py-1 text-xs font-bold rounded-md bg-white text-zinc-900 shadow-sm transition-all" onclick="toggleFinancialChart('daily')">Daily</button>
-                        <button id="btnMonthlyChart" class="px-3 py-1 text-xs font-bold rounded-md text-zinc-500 hover:text-zinc-900 transition-all" onclick="toggleFinancialChart('monthly')">Monthly</button>
+                        <button id="btnDailyChart"
+                            class="px-3 py-1 text-xs font-bold rounded-md bg-white text-zinc-900 shadow-sm transition-all"
+                            onclick="toggleFinancialChart('daily')">Daily</button>
+                        <button id="btnMonthlyChart"
+                            class="px-3 py-1 text-xs font-bold rounded-md text-zinc-500 hover:text-zinc-900 transition-all"
+                            onclick="toggleFinancialChart('monthly')">Monthly</button>
                     </div>
                     <div class="flex items-center gap-2">
                         <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
@@ -277,6 +352,8 @@
 {% endblock %}
 
 {% block extra_js %}
+{% load l10n %}
+{% localize off %}
 <script>
     const commonOptions = {
         responsive: true,
@@ -293,7 +370,7 @@
             }
         },
         scales: {
-            y: { 
+            y: {
                 grid: { color: '#f4f4f5' },
                 border: { display: false },
                 ticks: { font: { weight: 'bold' }, color: '#a1a1aa' }
@@ -313,36 +390,36 @@
     healthGradient.addColorStop(1, 'rgba(14, 165, 233, 0.01)');
 
     const healthDailyData = {
-        labels: [{% for s in snapshots %}"{{ s.timestamp|date:'M d' }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
-        datasets: [{
-            label: 'Health Score',
-            data: [{% for s in snapshots %}{{ s.bhs }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-            borderColor: '#0ea5e9',
-            borderWidth: 4,
+        labels: [{% for s in snapshots %}"{{ s.timestamp|date:'M d' }}"{% if not forloop.last %}, {% endif %} {% endfor %}],
+    datasets: [{
+        label: 'Health Score',
+        data: [{% for s in snapshots %}{{ s.bhs }}{% if not forloop.last %}, {% endif %} {% endfor %}],
+    borderColor: '#0ea5e9',
+        borderWidth: 4,
             pointBackgroundColor: '#ffffff',
-            pointBorderColor: '#0ea5e9',
-            pointBorderWidth: 2,
-            pointRadius: 4,
-            backgroundColor: healthGradient,
-            fill: true,
-            tension: 0.4
+                pointBorderColor: '#0ea5e9',
+                    pointBorderWidth: 2,
+                        pointRadius: 4,
+                            backgroundColor: healthGradient,
+                                fill: true,
+                                    tension: 0.4
         }]
     };
-    
+
     const healthMonthlyData = {
-        labels: [{% for s in monthly_snapshots %}"{{ s.timestamp|date:'M Y' }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
-        datasets: [{
-            label: 'Health Score',
-            data: [{% for s in monthly_snapshots %}{{ s.bhs }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-            borderColor: '#0ea5e9',
-            borderWidth: 4,
+        labels: [{% for s in monthly_snapshots %}"{{ s.timestamp|date:'M Y' }}"{% if not forloop.last %}, {% endif %} {% endfor %}],
+    datasets: [{
+        label: 'Health Score',
+        data: [{% for s in monthly_snapshots %}{{ s.bhs }}{% if not forloop.last %}, {% endif %} {% endfor %}],
+    borderColor: '#0ea5e9',
+        borderWidth: 4,
             pointBackgroundColor: '#ffffff',
-            pointBorderColor: '#0ea5e9',
-            pointBorderWidth: 2,
-            pointRadius: 4,
-            backgroundColor: healthGradient,
-            fill: true,
-            tension: 0.4
+                pointBorderColor: '#0ea5e9',
+                    pointBorderWidth: 2,
+                        pointRadius: 4,
+                            backgroundColor: healthGradient,
+                                fill: true,
+                                    tension: 0.4
         }]
     };
 
@@ -361,44 +438,44 @@
     // 2. Financial Velocity Chart (Combined Growth & Expense)
     const financeCtx = document.getElementById('financeChart').getContext('2d');
     const financeDailyData = {
-        labels: [{% for s in snapshots %}"{{ s.timestamp|date:'M d' }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
-        datasets: [
-            {
-                label: 'Growth Rate (%)',
-                data: [{% for s in snapshots %}{{ s.rgr_percentage|floatformat:2 }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-                backgroundColor: '#10b981',
-                borderRadius: 8,
-                barThickness: 20
+        labels: [{% for s in snapshots %}"{{ s.timestamp|date:'M d' }}"{% if not forloop.last %}, {% endif %} {% endfor %}],
+    datasets: [
+        {
+            label: 'Growth Rate (%)',
+            data: [{% for s in snapshots %}{{ s.rgr_percentage|floatformat:2}}{% if not forloop.last %}, {% endif %} {% endfor %}],
+    backgroundColor: '#10b981',
+        borderRadius: 8,
+            barThickness: 20
             },
-            {
-                label: 'Expense Ratio (%)',
-                data: [{% for s in snapshots %}{{ s.er_percentage|floatformat:2 }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-                backgroundColor: '#f87171',
-                borderRadius: 8,
-                barThickness: 20
+    {
+        label: 'Expense Ratio (%)',
+            data: [{% for s in snapshots %} {{ s.er_percentage|floatformat:2 }} {% if not forloop.last %}, {% endif %} {% endfor %}],
+    backgroundColor: '#f87171',
+        borderRadius: 8,
+            barThickness: 20
             }
         ]
     };
     const financeMonthlyData = {
-        labels: [{% for s in monthly_snapshots %}"{{ s.timestamp|date:'M Y' }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
-        datasets: [
-            {
-                label: 'Growth Rate (%)',
-                data: [{% for s in monthly_snapshots %}{{ s.rgr_percentage|floatformat:2 }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-                backgroundColor: '#10b981',
-                borderRadius: 8,
-                barThickness: 20
+        labels: [{% for s in monthly_snapshots %}"{{ s.timestamp|date:'M Y' }}"{% if not forloop.last %}, {% endif %} {% endfor %}],
+    datasets: [
+        {
+            label: 'Growth Rate (%)',
+            data: [{% for s in monthly_snapshots %}{{ s.rgr_percentage|floatformat:2}}{% if not forloop.last %}, {% endif %} {% endfor %}],
+    backgroundColor: '#10b981',
+        borderRadius: 8,
+            barThickness: 20
             },
-            {
-                label: 'Expense Ratio (%)',
-                data: [{% for s in monthly_snapshots %}{{ s.er_percentage|floatformat:2 }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-                backgroundColor: '#f87171',
-                borderRadius: 8,
-                barThickness: 20
+    {
+        label: 'Expense Ratio (%)',
+            data: [{% for s in monthly_snapshots %} {{ s.er_percentage|floatformat:2 }} {% if not forloop.last %}, {% endif %} {% endfor %}],
+    backgroundColor: '#f87171',
+        borderRadius: 8,
+            barThickness: 20
             }
         ]
     };
-    
+
     let financeChart = new Chart(financeCtx, {
         type: 'bar',
         data: financeDailyData,
@@ -408,54 +485,54 @@
     // 3. Operational Efficiency (ITR & SCP)
     const stockCtx = document.getElementById('stockChart').getContext('2d');
     const stockDailyData = {
-        labels: [{% for s in snapshots %}"{{ s.timestamp|date:'M d' }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
-        datasets: [
-            {
-                label: 'Inventory Turnover',
-                data: [{% for s in snapshots %}{{ s.itr|floatformat:2 }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-                borderColor: '#6366f1',
-                borderWidth: 3,
-                pointRadius: 0,
+        labels: [{% for s in snapshots %}"{{ s.timestamp|date:'M d' }}"{% if not forloop.last %}, {% endif %} {% endfor %}],
+    datasets: [
+        {
+            label: 'Inventory Turnover',
+            data: [{% for s in snapshots %}{{ s.itr|floatformat:2}}{% if not forloop.last %}, {% endif %} {% endfor %}],
+    borderColor: '#6366f1',
+        borderWidth: 3,
+            pointRadius: 0,
                 tension: 0.4,
-                yAxisID: 'y'
+                    yAxisID: 'y'
             },
-            {
-                label: 'Stock Coverage (Days)',
-                data: [{% for s in snapshots %}{{ s.scp|floatformat:0 }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-                borderColor: '#f59e0b',
-                borderWidth: 3,
-                borderDash: [5, 5],
+    {
+        label: 'Stock Coverage (Days)',
+            data: [{% for s in snapshots %} {{ s.scp|floatformat:0 }} {% if not forloop.last %}, {% endif %} {% endfor %}],
+    borderColor: '#f59e0b',
+        borderWidth: 3,
+            borderDash: [5, 5],
                 pointRadius: 0,
-                tension: 0.4,
-                yAxisID: 'y1'
+                    tension: 0.4,
+                        yAxisID: 'y1'
             }
         ]
     };
     const stockMonthlyData = {
-        labels: [{% for s in monthly_snapshots %}"{{ s.timestamp|date:'M Y' }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
-        datasets: [
-            {
-                label: 'Inventory Turnover',
-                data: [{% for s in monthly_snapshots %}{{ s.itr|floatformat:2 }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-                borderColor: '#6366f1',
-                borderWidth: 3,
-                pointRadius: 0,
+        labels: [{% for s in monthly_snapshots %}"{{ s.timestamp|date:'M Y' }}"{% if not forloop.last %}, {% endif %} {% endfor %}],
+    datasets: [
+        {
+            label: 'Inventory Turnover',
+            data: [{% for s in monthly_snapshots %}{{ s.itr|floatformat:2}}{% if not forloop.last %}, {% endif %} {% endfor %}],
+    borderColor: '#6366f1',
+        borderWidth: 3,
+            pointRadius: 0,
                 tension: 0.4,
-                yAxisID: 'y'
+                    yAxisID: 'y'
             },
-            {
-                label: 'Stock Coverage (Days)',
-                data: [{% for s in monthly_snapshots %}{{ s.scp|floatformat:0 }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-                borderColor: '#f59e0b',
-                borderWidth: 3,
-                borderDash: [5, 5],
+    {
+        label: 'Stock Coverage (Days)',
+            data: [{% for s in monthly_snapshots %} {{ s.scp|floatformat:0 }} {% if not forloop.last %}, {% endif %} {% endfor %}],
+    borderColor: '#f59e0b',
+        borderWidth: 3,
+            borderDash: [5, 5],
                 pointRadius: 0,
-                tension: 0.4,
-                yAxisID: 'y1'
+                    tension: 0.4,
+                        yAxisID: 'y1'
             }
         ]
     };
-    
+
     let stockChart = new Chart(stockCtx, {
         type: 'line',
         data: stockDailyData,
@@ -480,12 +557,12 @@
             }
         }
     });
-    
+
     // Toggle KPI Charts Function
-    window.toggleKpiChart = function(chartName, period) {
+    window.toggleKpiChart = function (chartName, period) {
         const btnDaily = document.getElementById('btn' + chartName.charAt(0).toUpperCase() + chartName.slice(1) + 'Daily');
         const btnMonthly = document.getElementById('btn' + chartName.charAt(0).toUpperCase() + chartName.slice(1) + 'Monthly');
-        
+
         // Update Buttons
         if (period === 'daily') {
             btnDaily.classList.add('bg-white', 'text-zinc-900', 'shadow-sm');
@@ -498,7 +575,7 @@
             btnDaily.classList.remove('bg-white', 'text-zinc-900', 'shadow-sm');
             btnDaily.classList.add('text-zinc-500');
         }
-        
+
         // Update Charts
         if (chartName === 'health') {
             healthChart.data = period === 'daily' ? healthDailyData : healthMonthlyData;
@@ -518,31 +595,31 @@
         type: 'bar',
         data: {
             labels: [{% for p in products %}"{{ p.name|escapejs }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
-            datasets: [
-                {
-                    type: 'bar',
-                    label: 'Stock Level',
-                    data: [{% for p in products %}{{ p.stock_level }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-                    backgroundColor: '#3b82f6',
-                    borderRadius: 6,
-                    barThickness: 20,
-                    yAxisID: 'y'
+        datasets: [
+        {
+            type: 'bar',
+            label: 'Stock Level',
+            data: [{% for p in products %}{{ p.stock_level }}{% if not forloop.last %}, {% endif %} {% endfor %}],
+    backgroundColor: '#3b82f6',
+        borderRadius: 6,
+            barThickness: 20,
+                yAxisID: 'y'
                 },
-                {
-                    type: 'line',
-                    label: 'Unit Price',
-                    data: [{% for p in products %}{{ p.price|floatformat:2 }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-                    borderColor: '#a855f7',
-                    borderWidth: 3,
-                    pointBackgroundColor: '#ffffff',
-                    pointBorderColor: '#a855f7',
+    {
+        type: 'line',
+            label: 'Unit Price',
+                data: [{% for p in products %} {{ p.price|floatformat:2 }} {% if not forloop.last %}, {% endif %} {% endfor %}],
+    borderColor: '#a855f7',
+        borderWidth: 3,
+            pointBackgroundColor: '#ffffff',
+                pointBorderColor: '#a855f7',
                     pointRadius: 4,
-                    tension: 0.4,
-                    yAxisID: 'y1'
+                        tension: 0.4,
+                            yAxisID: 'y1'
                 }
             ]
         },
-        options: {
+    options: {
             ...commonOptions,
             scales: {
                 ...commonOptions.scales,
@@ -551,84 +628,84 @@
                     ticks: {
                         ...commonOptions.scales.x.ticks,
                         maxRotation: 45,
-                        minRotation: 45
-                    }
-                },
-                y: {
-                    type: 'linear',
+                            minRotation: 45
+                }
+            },
+            y: {
+                type: 'linear',
                     display: true,
-                    position: 'left',
-                    grid: { color: '#f4f4f5' },
-                    ticks: { font: { weight: 'bold' }, color: '#3b82f6' }
-                },
-                y1: {
-                    type: 'linear',
+                        position: 'left',
+                            grid: { color: '#f4f4f5' },
+                ticks: { font: { weight: 'bold' }, color: '#3b82f6' }
+            },
+            y1: {
+                type: 'linear',
                     display: true,
-                    position: 'right',
-                    grid: { drawOnChartArea: false },
-                    ticks: { 
-                        font: { weight: 'bold' }, 
-                        color: '#a855f7',
-                        callback: function(value) { return '$' + value; }
-                    }
+                        position: 'right',
+                            grid: { drawOnChartArea: false },
+                ticks: {
+                    font: { weight: 'bold' },
+                    color: '#a855f7',
+                        callback: function(value) { return 'PKR ' + value; }
                 }
             }
         }
+    }
     });
 
     // 5. Financial Performance Chart (Bar)
     const fpCtx = document.getElementById('financialPerformanceChart').getContext('2d');
-    
+
     const monthlyData = {
-        labels: [{% for d in monthly_chart_data %}"{{ d.label }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
-        datasets: [
-            {
-                label: 'Revenue',
-                data: [{% for d in monthly_chart_data %}{{ d.revenue|floatformat:2 }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-                backgroundColor: '#10b981',
-                borderRadius: 6,
-                barThickness: 15
+        labels: [{% for d in monthly_chart_data %}"{{d.label }}"{% if not forloop.last %}, {% endif %} {% endfor %}],
+    datasets: [
+        {
+            label: 'Revenue',
+            data: [{% for d in monthly_chart_data %}{{ d.revenue|floatformat:2}}{% if not forloop.last %}, {% endif %} {% endfor %}],
+    backgroundColor: '#10b981',
+        borderRadius: 6,
+            barThickness: 15
             },
-            {
-                label: 'Expenses',
-                data: [{% for d in monthly_chart_data %}{{ d.expenses|floatformat:2 }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-                backgroundColor: '#f87171',
-                borderRadius: 6,
-                barThickness: 15
+    {
+        label: 'Expenses',
+            data: [{% for d in monthly_chart_data %} {{ d.expenses|floatformat:2 }} {% if not forloop.last %}, {% endif %} {% endfor %}],
+    backgroundColor: '#f87171',
+        borderRadius: 6,
+            barThickness: 15
             },
-            {
-                label: 'Net Profit',
-                data: [{% for d in monthly_chart_data %}{{ d.profit|floatformat:2 }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-                backgroundColor: '#6366f1',
-                borderRadius: 6,
-                barThickness: 15
+    {
+        label: 'Net Profit',
+            data: [{% for d in monthly_chart_data %} {{ d.profit|floatformat:2 }} {% if not forloop.last %}, {% endif %} {% endfor %}],
+    backgroundColor: '#6366f1',
+        borderRadius: 6,
+            barThickness: 15
             }
         ]
     };
-    
+
     const dailyData = {
-        labels: [{% for d in daily_chart_data %}"{{ d.label }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
-        datasets: [
-            {
-                label: 'Revenue',
-                data: [{% for d in daily_chart_data %}{{ d.revenue|floatformat:2 }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-                backgroundColor: '#10b981',
-                borderRadius: 6,
-                barThickness: 10
+        labels: [{% for d in daily_chart_data %}"{{d.label }}"{% if not forloop.last %}, {% endif %} {% endfor %}],
+    datasets: [
+        {
+            label: 'Revenue',
+            data: [{% for d in daily_chart_data %}{{ d.revenue|floatformat:2}}{% if not forloop.last %}, {% endif %} {% endfor %}],
+    backgroundColor: '#10b981',
+        borderRadius: 6,
+            barThickness: 10
             },
-            {
-                label: 'Expenses',
-                data: [{% for d in daily_chart_data %}{{ d.expenses|floatformat:2 }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-                backgroundColor: '#f87171',
-                borderRadius: 6,
-                barThickness: 10
+    {
+        label: 'Expenses',
+            data: [{% for d in daily_chart_data %} {{ d.expenses|floatformat:2 }} {% if not forloop.last %}, {% endif %} {% endfor %}],
+    backgroundColor: '#f87171',
+        borderRadius: 6,
+            barThickness: 10
             },
-            {
-                label: 'Net Profit',
-                data: [{% for d in daily_chart_data %}{{ d.profit|floatformat:2 }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-                backgroundColor: '#6366f1',
-                borderRadius: 6,
-                barThickness: 10
+    {
+        label: 'Net Profit',
+            data: [{% for d in daily_chart_data %} {{ d.profit|floatformat:2 }} {% if not forloop.last %}, {% endif %} {% endfor %}],
+    backgroundColor: '#6366f1',
+        borderRadius: 6,
+            barThickness: 10
             }
         ]
     };
@@ -645,17 +722,17 @@
                     ticks: {
                         font: { weight: 'bold' },
                         color: '#a1a1aa',
-                        callback: function(value) { return '$' + value; }
+                        callback: function (value) { return 'PKR ' + value; }
                     }
                 }
             }
         }
     });
 
-    window.toggleFinancialChart = function(period) {
+    window.toggleFinancialChart = function (period) {
         const btnDaily = document.getElementById('btnDailyChart');
         const btnMonthly = document.getElementById('btnMonthlyChart');
-        
+
         if (period === 'daily') {
             financialChart.data = dailyData;
             btnDaily.classList.add('bg-white', 'text-zinc-900', 'shadow-sm');
@@ -672,4 +749,5 @@
         financialChart.update();
     };
 </script>
+{% endlocalize %}
 {% endblock %}

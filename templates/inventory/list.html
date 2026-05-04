@@ -11,8 +11,11 @@
             <h1 class="text-3xl font-black text-zinc-950 tracking-tight">Product Catalog</h1>
             <p class="text-zinc-500 mt-1">Manage your stock levels and product details.</p>
         </div>
-        <button onclick="document.getElementById('addModal').classList.remove('hidden')" class="bg-zinc-950 text-white px-6 py-3 rounded-xl text-sm font-bold hover:bg-zinc-800 transition-all shadow-xl shadow-zinc-200 flex items-center gap-2">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+        <button onclick="document.getElementById('addModal').classList.remove('hidden')"
+            class="bg-zinc-950 text-white px-6 py-3 rounded-xl text-sm font-bold hover:bg-zinc-800 transition-all shadow-xl shadow-zinc-200 flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
             Add New Product
         </button>
     </div>
@@ -23,12 +26,18 @@
             <table class="min-w-full divide-y divide-zinc-100">
                 <thead class="bg-zinc-50/50">
                     <tr>
-                        <th class="px-8 py-5 text-left text-[10px] font-black text-zinc-400 uppercase tracking-widest">Product Info</th>
-                        <th class="px-8 py-5 text-left text-[10px] font-black text-zinc-400 uppercase tracking-widest">SKU Identifier</th>
-                        <th class="px-8 py-5 text-left text-[10px] font-black text-zinc-400 uppercase tracking-widest">Financials</th>
-                        <th class="px-8 py-5 text-left text-[10px] font-black text-zinc-400 uppercase tracking-widest">Inventory</th>
-                        <th class="px-8 py-5 text-left text-[10px] font-black text-zinc-400 uppercase tracking-widest">Status</th>
-                        <th class="px-8 py-5 text-right text-[10px] font-black text-zinc-400 uppercase tracking-widest">Actions</th>
+                        <th class="px-8 py-5 text-left text-[10px] font-black text-zinc-400 uppercase tracking-widest">
+                            Product Info</th>
+                        <th class="px-8 py-5 text-left text-[10px] font-black text-zinc-400 uppercase tracking-widest">
+                            SKU Identifier</th>
+                        <th class="px-8 py-5 text-left text-[10px] font-black text-zinc-400 uppercase tracking-widest">
+                            Financials</th>
+                        <th class="px-8 py-5 text-left text-[10px] font-black text-zinc-400 uppercase tracking-widest">
+                            Inventory</th>
+                        <th class="px-8 py-5 text-left text-[10px] font-black text-zinc-400 uppercase tracking-widest">
+                            Status</th>
+                        <th class="px-8 py-5 text-right text-[10px] font-black text-zinc-400 uppercase tracking-widest">
+                            Actions</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-zinc-100 bg-white">
@@ -36,7 +45,8 @@
                     <tr class="hover:bg-zinc-50/50 transition-colors group">
                         <td class="px-8 py-6 whitespace-nowrap">
                             <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 rounded-xl bg-zinc-100 flex items-center justify-center text-zinc-400 font-bold group-hover:bg-sky-50 group-hover:text-sky-600 transition-colors">
+                                <div
+                                    class="w-10 h-10 rounded-xl bg-zinc-100 flex items-center justify-center text-zinc-400 font-bold group-hover:bg-sky-50 group-hover:text-sky-600 transition-colors">
                                     {{ product.name|slice:":1"|upper }}
                                 </div>
                                 <div>
@@ -49,32 +59,36 @@
                             <span class="text-xs font-mono font-bold text-zinc-500 bg-zinc-100 px-2 py-1 rounded-md">{{ product.sku }}</span>
                         </td>
                         <td class="px-8 py-6 whitespace-nowrap">
-                            <div class="text-sm font-bold text-zinc-950">${{ product.price }}</div>
-                            <div class="text-[11px] font-bold text-zinc-400">Cost: ${{ product.cost }}</div>
+                            <div class="text-sm font-bold text-zinc-950">PKR {{ product.price }}</div>
+                            <div class="text-[11px] font-bold text-zinc-400">Cost: PKR {{ product.cost }}</div>
                         </td>
                         <td class="px-8 py-6 whitespace-nowrap">
                             <div class="flex items-center gap-2">
-                                <span class="text-sm font-black {% if product.stock_level <= product.reorder_point %}text-red-600{% else %}text-zinc-950{% endif %}">
+                                <span
+                                    class="text-sm font-black {% if product.stock_level <= product.reorder_point %}text-red-600{% else %}text-zinc-950{% endif %}">
                                     {{ product.stock_level }}
                                 </span>
                                 <span class="text-[10px] font-bold text-zinc-400 uppercase">units</span>
                             </div>
                         </td>
                         <td class="px-8 py-6 whitespace-nowrap">
-                            {% if product.stock_level <= product.reorder_point %}
-                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50 text-red-700 text-[10px] font-black uppercase tracking-wider border border-red-100">
-                                    <span class="w-1 h-1 rounded-full bg-red-500 animate-pulse"></span>
-                                    Critical
+                            {% if product.stock_level <= product.reorder_point %} <span
+                                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50 text-red-700 text-[10px] font-black uppercase tracking-wider border border-red-100">
+                                <span class="w-1 h-1 rounded-full bg-red-500 animate-pulse"></span>
+                                Critical
                                 </span>
-                            {% else %}
-                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-black uppercase tracking-wider border border-emerald-100">
+                                {% else %}
+                                <span
+                                    class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-black uppercase tracking-wider border border-emerald-100">
                                     <span class="w-1 h-1 rounded-full bg-emerald-500"></span>
                                     Healthy
                                 </span>
-                            {% endif %}
+                                {% endif %}
                         </td>
                         <td class="px-8 py-6 whitespace-nowrap text-right">
-                            <button onclick="openUpdateModal('{{ product.id }}', '{{ product.name }}', '{{ product.stock_level }}')" class="text-[11px] font-black uppercase tracking-widest text-sky-600 hover:text-sky-700 transition-colors">
+                            <button
+                                onclick="openUpdateModal('{{ product.id }}', '{{ product.name }}', '{{ product.stock_level }}')"
+                                class="text-[11px] font-black uppercase tracking-widest text-sky-600 hover:text-sky-700 transition-colors">
                                 Update Stock
                             </button>
                         </td>
@@ -83,7 +97,10 @@
                     <tr>
                         <td colspan="6" class="px-8 py-20 text-center">
                             <div class="flex flex-col items-center opacity-30">
-                                <svg class="w-16 h-16 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                                <svg class="w-16 h-16 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                                </svg>
                                 <p class="text-xl font-black">No Products Found</p>
                                 <p class="text-sm font-bold mt-1">Start by adding your first inventory item.</p>
                             </div>
@@ -106,37 +123,57 @@
                 {% csrf_token %}
                 <div class="grid grid-cols-2 gap-6">
                     <div class="col-span-2">
-                        <label class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">Product Name</label>
-                        <input type="text" name="name" required placeholder="e.g. Premium Coffee Beans" class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
+                        <label
+                            class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">Product
+                            Name</label>
+                        <input type="text" name="name" required placeholder="e.g. Premium Coffee Beans"
+                            class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
                     </div>
                     <div>
-                        <label class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">Category</label>
-                        <input type="text" name="category" required placeholder="Beverages" class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
+                        <label
+                            class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">Category</label>
+                        <input type="text" name="category" required placeholder="Beverages"
+                            class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
                     </div>
                     <div>
-                        <label class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">SKU</label>
-                        <input type="text" name="sku" required placeholder="CF-001" class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
+                        <label
+                            class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">SKU</label>
+                        <input type="text" name="sku" required placeholder="CF-001"
+                            class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
                     </div>
                     <div>
-                        <label class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">Price ($)</label>
-                        <input type="number" step="0.01" name="price" required placeholder="24.99" class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
+                        <label class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">Price
+                            (PKR)</label>
+                        <input type="number" step="0.01" name="price" required placeholder="24.99"
+                            class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
                     </div>
                     <div>
-                        <label class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">Cost ($)</label>
-                        <input type="number" step="0.01" name="cost" required placeholder="12.50" class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
+                        <label class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">Cost
+                            (PKR)</label>
+                        <input type="number" step="0.01" name="cost" required placeholder="12.50"
+                            class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
                     </div>
                     <div>
-                        <label class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">Initial Stock</label>
-                        <input type="number" name="stock_level" required placeholder="100" class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
+                        <label
+                            class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">Initial
+                            Stock</label>
+                        <input type="number" name="stock_level" required placeholder="100"
+                            class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
                     </div>
                     <div>
-                        <label class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">Reorder Point</label>
-                        <input type="number" name="reorder_point" required placeholder="10" class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
+                        <label
+                            class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">Reorder
+                            Point</label>
+                        <input type="number" name="reorder_point" required placeholder="10"
+                            class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
                     </div>
                 </div>
                 <div class="flex gap-4 pt-4">
-                    <button type="button" onclick="document.getElementById('addModal').classList.add('hidden')" class="flex-1 bg-zinc-100 text-zinc-600 py-4 rounded-2xl font-bold hover:bg-zinc-200 transition-all">Cancel</button>
-                    <button type="submit" class="flex-1 bg-zinc-950 text-white py-4 rounded-2xl font-bold hover:bg-zinc-800 transition-all shadow-xl shadow-zinc-200">Save Product</button>
+                    <button type="button" onclick="document.getElementById('addModal').classList.add('hidden')"
+                        class="flex-1 bg-zinc-100 text-zinc-600 py-4 rounded-2xl font-bold hover:bg-zinc-200 transition-all">Cancel</button>
+                    <button type="submit"
+                        class="flex-1 bg-zinc-950 text-white py-4 rounded-2xl font-bold hover:bg-zinc-800 transition-all shadow-xl shadow-zinc-200">Save
+                        Product</button>
                 </div>
             </form>
         </div>
@@ -152,12 +189,16 @@
             <form id="updateForm" method="POST" class="space-y-6">
                 {% csrf_token %}
                 <div>
-                    <label class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">New Stock Level</label>
-                    <input type="number" name="stock_level" id="modalStock" required class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
+                    <label class="block text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 px-1">New Stock
+                        Level</label>
+                    <input type="number" name="stock_level" id="modalStock" required
+                        class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 outline-none transition-all font-bold text-zinc-900">
                 </div>
                 <div class="flex gap-4">
-                    <button type="button" onclick="document.getElementById('updateModal').classList.add('hidden')" class="flex-1 bg-zinc-100 text-zinc-600 py-4 rounded-2xl font-bold hover:bg-zinc-200 transition-all">Cancel</button>
-                    <button type="submit" class="flex-1 bg-zinc-950 text-white py-4 rounded-2xl font-bold hover:bg-zinc-800 transition-all shadow-xl shadow-zinc-200">Update</button>
+                    <button type="button" onclick="document.getElementById('updateModal').classList.add('hidden')"
+                        class="flex-1 bg-zinc-100 text-zinc-600 py-4 rounded-2xl font-bold hover:bg-zinc-200 transition-all">Cancel</button>
+                    <button type="submit"
+                        class="flex-1 bg-zinc-950 text-white py-4 rounded-2xl font-bold hover:bg-zinc-800 transition-all shadow-xl shadow-zinc-200">Update</button>
                 </div>
             </form>
         </div>
@@ -175,5 +216,3 @@
     }
 </script>
 {% endblock %}
-
-
