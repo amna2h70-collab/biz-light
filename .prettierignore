@@ -1,2 +1,0 @@
-# Ignore Django template files - Prettier breaks {{ }} and |floatformat:X tags
-templates/**/*.html

@@ -324,9 +324,25 @@ def sync_store_data(request):
         for order in orders:
             sku = order.get('sku')
             quantity = order.get('quantity', 1)
+            order_ts = order.get('timestamp')
+            
             try:
                 product = Product.objects.get(sku=sku, user_id=request.user.id)
                 total = product.price * quantity
+                
+                parsed_ts = None
+                if order_ts:
+                    from dateutil.parser import parse
+                    parsed_ts = parse(order_ts)
+                    # Deduplication: check if this specific order is already recorded
+                    if Transaction.objects.filter(
+                        user_id=request.user.id,
+                        product=product,
+                        type='SALE',
+                        quantity=quantity,
+                        timestamp=parsed_ts
+                    ).exists():
+                        continue  # Skip already synced order
                 
                 t = Transaction.objects.create(
                     user_id=request.user.id,
@@ -335,18 +351,13 @@ def sync_store_data(request):
                     quantity=quantity,
                     total_amount=total
                 )
-                order_ts = order.get('timestamp')
-                if order_ts:
-                    from dateutil.parser import parse
-                    t.timestamp = parse(order_ts)
+                
+                if parsed_ts:
+                    t.timestamp = parsed_ts
                     t.save(update_fields=['timestamp'])
+                    
                 Product.objects.filter(id=product.id).update(stock_level=product.stock_level - quantity)
                 product.stock_level -= quantity
-                
-                # Mark order as synced (only for custom API)
-                if platform == 'custom':
-                    order_id = order.get('id')
-                    requests.patch(f"{store_url}/{order_id}", json={"status": "Synced"})
                 
                 synced_count += 1
                 
@@ -374,7 +385,9 @@ def _fetch_custom_orders(store_url):
     response = requests.get(store_url, timeout=10)
     response.raise_for_status()
     all_orders = response.json()
-    return [o for o in all_orders if o.get('status') == 'Pending']
+    # Return all orders instead of filtering by 'Pending'. 
+    # Deduplication is handled gracefully in the sync loop.
+    return all_orders
 
 
 def _fetch_woocommerce_orders(store_url, api_key):
