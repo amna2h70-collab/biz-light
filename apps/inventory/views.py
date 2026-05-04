@@ -18,8 +18,8 @@ def _resolve_alerts_for_product(user, product):
         # Filter alerts that mention this product's name
         for alert in unresolved:
             if product.name in alert.message:
-                Alert.objects.filter(id=alert.id).update(is_resolved=True)
                 alert.is_resolved = True
+                alert.save()
 
 
 def _create_low_stock_alert(user, product):

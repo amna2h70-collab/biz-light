@@ -1,0 +1,289 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Aero X-1 Drone",
+      "sku": "TOY-DRONE-001",
+      "price": 35000,
+      "stock": 15
+    },
+    {
+      "id": 2,
+      "name": "Cyber Mech",
+      "sku": "TOY-ROBOT-002",
+      "price": 65000,
+      "stock": 8
+    },
+    {
+      "id": 3,
+      "name": "Neon Drift RC",
+      "sku": "TOY-CAR-004",
+      "price": 18500,
+      "stock": 25
+    },
+    {
+      "id": 4,
+      "name": "Space Rocket",
+      "sku": "TOY-ROCKET-011",
+      "price": 22000,
+      "stock": 30
+    },
+    {
+      "id": 5,
+      "name": "Hoverboard 3000",
+      "sku": "TOY-HOVER-005",
+      "price": 45000,
+      "stock": 12
+    },
+    {
+      "id": 6,
+      "name": "VR Space Helmet",
+      "sku": "TOY-VR-006",
+      "price": 42000,
+      "stock": 10
+    },
+    {
+      "id": 7,
+      "name": "Plasma Blaster",
+      "sku": "TOY-BLASTER-007",
+      "price": 8500,
+      "stock": 40
+    },
+    {
+      "id": 8,
+      "name": "Robo-Dog Buddy",
+      "sku": "TOY-DOG-008",
+      "price": 32000,
+      "stock": 18
+    }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "sku": "TOY-DRONE-001",
+      "name": "Aero X-1 Drone",
+      "price": 35000,
+      "quantity": 2,
+      "customerName": "Ahmed Khan",
+      "email": "ahmed.khan@gmail.com",
+      "status": "Synced",
+      "timestamp": "2026-04-15T09:23:00.000Z"
+    },
+    {
+      "id": 2,
+      "sku": "TOY-ROBOT-002",
+      "name": "Cyber Mech",
+      "price": 65000,
+      "quantity": 1,
+      "customerName": "Sara Ali",
+      "email": "sara.ali@outlook.com",
+      "status": "Synced",
+      "timestamp": "2026-04-16T14:10:00.000Z"
+    },
+    {
+      "id": 3,
+      "sku": "TOY-CAR-004",
+      "name": "Neon Drift RC",
+      "price": 18500,
+      "quantity": 3,
+      "customerName": "Bilal Hussain",
+      "email": "bilal.h@yahoo.com",
+      "status": "Synced",
+      "timestamp": "2026-04-17T11:45:00.000Z"
+    },
+    {
+      "id": 4,
+      "sku": "TOY-ROCKET-011",
+      "name": "Space Rocket",
+      "price": 22000,
+      "quantity": 1,
+      "customerName": "Fatima Noor",
+      "email": "fatima.noor@gmail.com",
+      "status": "Synced",
+      "timestamp": "2026-04-18T16:30:00.000Z"
+    },
+    {
+      "id": 5,
+      "sku": "TOY-HOVER-005",
+      "name": "Hoverboard 3000",
+      "price": 45000,
+      "quantity": 1,
+      "customerName": "Usman Tariq",
+      "email": "usman.t@hotmail.com",
+      "status": "Synced",
+      "timestamp": "2026-04-20T08:15:00.000Z"
+    },
+    {
+      "id": 6,
+      "sku": "TOY-BLASTER-007",
+      "name": "Plasma Blaster",
+      "price": 8500,
+      "quantity": 5,
+      "customerName": "Zara Sheikh",
+      "email": "zara.sheikh@gmail.com",
+      "status": "Synced",
+      "timestamp": "2026-04-21T10:00:00.000Z"
+    },
+    {
+      "id": 7,
+      "sku": "TOY-DOG-008",
+      "name": "Robo-Dog Buddy",
+      "price": 32000,
+      "quantity": 2,
+      "customerName": "Hassan Raza",
+      "email": "hassan.raza@gmail.com",
+      "status": "Synced",
+      "timestamp": "2026-04-22T13:20:00.000Z"
+    },
+    {
+      "id": 8,
+      "sku": "TOY-DRONE-001",
+      "name": "Aero X-1 Drone",
+      "price": 35000,
+      "quantity": 1,
+      "customerName": "Ayesha Malik",
+      "email": "ayesha.m@outlook.com",
+      "status": "Synced",
+      "timestamp": "2026-04-25T09:00:00.000Z"
+    },
+    {
+      "id": 9,
+      "sku": "TOY-VR-006",
+      "name": "VR Space Helmet",
+      "price": 42000,
+      "quantity": 1,
+      "customerName": "Imran Siddiqui",
+      "email": "imran.sid@gmail.com",
+      "status": "Synced",
+      "timestamp": "2026-04-26T15:45:00.000Z"
+    },
+    {
+      "id": 10,
+      "sku": "TOY-ROBOT-002",
+      "name": "Cyber Mech",
+      "price": 65000,
+      "quantity": 1,
+      "customerName": "Nadia Jameel",
+      "email": "nadia.j@hotmail.com",
+      "status": "Synced",
+      "timestamp": "2026-04-28T10:30:00.000Z"
+    },
+    {
+      "id": 11,
+      "sku": "TOY-CAR-004",
+      "name": "Neon Drift RC",
+      "price": 18500,
+      "quantity": 2,
+      "customerName": "Ali Raza",
+      "email": "ali.raza@gmail.com",
+      "status": "Synced",
+      "timestamp": "2026-04-28T12:00:00.000Z"
+    },
+    {
+      "id": 12,
+      "sku": "TOY-DRONE-001",
+      "name": "Aero X-1 Drone",
+      "price": 35000,
+      "quantity": 1,
+      "customerName": "Mehreen Iqbal",
+      "email": "mehreen.i@outlook.com",
+      "status": "Synced",
+      "timestamp": "2026-04-29T08:20:00.000Z"
+    },
+    {
+      "id": 13,
+      "sku": "TOY-HOVER-005",
+      "name": "Hoverboard 3000",
+      "price": 45000,
+      "quantity": 1,
+      "customerName": "Kamran Shah",
+      "email": "kamran.shah@gmail.com",
+      "status": "Synced",
+      "timestamp": "2026-04-29T14:10:00.000Z"
+    },
+    {
+      "id": 14,
+      "sku": "TOY-BLASTER-007",
+      "name": "Plasma Blaster",
+      "price": 8500,
+      "quantity": 3,
+      "customerName": "Sana Bukhari",
+      "email": "sana.b@yahoo.com",
+      "status": "Synced",
+      "timestamp": "2026-04-30T09:00:00.000Z"
+    },
+    {
+      "id": 15,
+      "sku": "TOY-ROCKET-011",
+      "name": "Space Rocket",
+      "price": 22000,
+      "quantity": 2,
+      "customerName": "Waqar Ahmed",
+      "email": "waqar.a@gmail.com",
+      "status": "Synced",
+      "timestamp": "2026-04-30T11:30:00.000Z"
+    },
+    {
+      "id": 16,
+      "sku": "TOY-DOG-008",
+      "name": "Robo-Dog Buddy",
+      "price": 32000,
+      "quantity": 1,
+      "customerName": "Hira Fatima",
+      "email": "hira.f@outlook.com",
+      "status": "Synced",
+      "timestamp": "2026-05-01T07:45:00.000Z"
+    }
+  ],
+  "sales": [
+    {
+      "id": 1,
+      "date": "2026-04-15",
+      "totalRevenue": 70000,
+      "totalOrders": 1,
+      "topProduct": "Aero X-1 Drone"
+    },
+    {
+      "id": 2,
+      "date": "2026-04-16",
+      "totalRevenue": 65000,
+      "totalOrders": 1,
+      "topProduct": "Cyber Mech"
+    },
+    {
+      "id": 3,
+      "date": "2026-04-17",
+      "totalRevenue": 55500,
+      "totalOrders": 1,
+      "topProduct": "Neon Drift RC"
+    },
+    {
+      "id": 4,
+      "date": "2026-04-18",
+      "totalRevenue": 22000,
+      "totalOrders": 1,
+      "topProduct": "Space Rocket"
+    },
+    {
+      "id": 5,
+      "date": "2026-04-20",
+      "totalRevenue": 45000,
+      "totalOrders": 1,
+      "topProduct": "Hoverboard 3000"
+    },
+    {
+      "id": 6,
+      "date": "2026-04-21",
+      "totalRevenue": 42500,
+      "totalOrders": 1,
+      "topProduct": "Plasma Blaster"
+    },
+    {
+      "id": 7,
+      "date": "2026-04-22",
+      "totalRevenue": 64000,
+      "totalOrders": 1,
+      "topProduct": "Robo-Dog Buddy"
+    }
+  ]
+}

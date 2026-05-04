@@ -5,20 +5,16 @@ import time
 import threading
 from django.conf import settings
 
-# Force pure python implementation for protobuf to avoid C extension issues on Python 3.14
-os.environ['PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION'] = 'python'
-
 
 class AIService:
-    """Singleton AI Service that handles Gemini API calls with robust rate-limit handling."""
+    """Singleton AI Service using Groq API with OpenAI-compatible endpoints."""
     _instance = None
     _lock = threading.Lock()
     MAX_RETRIES = 3
-    BASE_DELAY = 2  # seconds
-    # Track recent failures to avoid hammering a rate-limited API
+    BASE_DELAY = 2
     _last_failure_time = 0
-    _cooldown_seconds = 120  # Wait longer after a rate-limit failure
-    _cache = {} # Simple in-memory cache for the session
+    _cooldown_seconds = 120
+    _cache = {}
 
     def __new__(cls):
         if cls._instance is None:
@@ -33,24 +29,15 @@ class AIService:
             return
         self._initialized = True
         self.available = False
-        self.use_sdk = False
-        self.api_key = os.getenv('GEMINI_API_KEY', '').strip()
-        # Use 2.5-flash as requested
-        self.model_name = 'gemini-2.5-flash'
-        
-        # Try SDK first
-        try:
-            from google import genai
-            self.client = genai.Client(api_key=self.api_key)
-            self.use_sdk = True
+        self.api_key = os.getenv('GROQ_API_KEY', '').strip()
+        self.model_name = 'openai/gpt-oss-120b'
+        self.api_url = 'https://api.groq.com/openai/v1/chat/completions'
+
+        if self.api_key:
             self.available = True
-            print(f"AI Service initialized with SDK ({self.model_name})")
-        except Exception as e:
-            print(f"AI Service SDK init failed: {e}. Falling back to REST API.")
-            if self.api_key:
-                self.available = True
-            else:
-                print("No API key found, AI Service unavailable.")
+            print(f"AI Service initialized with Groq ({self.model_name})")
+        else:
+            print("No GROQ_API_KEY found, AI Service unavailable.")
 
     def _is_in_cooldown(self):
         """Check if we're still in cooldown after a rate-limit failure."""
@@ -59,119 +46,106 @@ class AIService:
         elapsed = time.time() - self._last_failure_time
         return elapsed < self._cooldown_seconds
 
-    def _call_rest_api(self, prompt):
-        """Fallback method using REST API directly to avoid protobuf issues."""
+    def _call_api(self, prompt):
+        """Call Groq API using OpenAI-compatible chat completions endpoint."""
         if self._is_in_cooldown():
             return self._get_fallback_message()
 
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/{self.model_name}:generateContent?key={self.api_key}"
-        headers = {'Content-Type': 'application/json'}
+        headers = {
+            'Content-Type': 'application/json',
+            'Authorization': f'Bearer {self.api_key}'
+        }
         payload = {
-            "contents": [{"parts": [{"text": prompt}]}],
-            "generationConfig": {
-                "maxOutputTokens": 500,
-                "temperature": 0.7
-            }
+            "model": self.model_name,
+            "messages": [
+                {"role": "system", "content": "You are a professional business advisor for micro-businesses in Pakistan. Always respond in English. Be concise, actionable, and encouraging."},
+                {"role": "user", "content": prompt}
+            ],
+            "max_tokens": 500,
+            "temperature": 0.7
         }
 
         for attempt in range(self.MAX_RETRIES):
             try:
-                response = requests.post(url, headers=headers, json=payload, timeout=10)
-                
+                response = requests.post(
+                    self.api_url,
+                    headers=headers,
+                    json=payload,
+                    timeout=15
+                )
+
                 if response.status_code == 429:
-                    # Don't sleep long in a web request, just fail and let the cooldown handle it
                     AIService._last_failure_time = time.time()
-                    print(f"AI Service rate limited (429) on attempt {attempt + 1}. Entering cooldown.")
+                    print(f"Groq rate limited (429) on attempt {attempt + 1}. Entering cooldown.")
                     return self._get_fallback_message()
-                
+
                 if response.status_code == 403:
                     error_data = response.json()
                     error_msg = error_data.get('error', {}).get('message', '')
                     if 'quota' in error_msg.lower() or 'rate' in error_msg.lower():
                         AIService._last_failure_time = time.time()
-                        print(f"AI Service quota exceeded: {error_msg}")
                         return self._get_fallback_message()
                     return f"AI Service error: {error_msg}"
-                
+
                 response.raise_for_status()
                 data = response.json()
-                
+
                 # Reset failure tracking on success
                 AIService._last_failure_time = 0
-                
-                candidates = data.get('candidates', [])
-                if candidates:
-                    parts = candidates[0].get('content', {}).get('parts', [])
-                    if parts:
-                        return parts[0].get('text', self._get_fallback_message())
-                
+
+                choices = data.get('choices', [])
+                if choices:
+                    message = choices[0].get('message', {})
+                    return message.get('content', self._get_fallback_message())
+
                 return self._get_fallback_message()
-                
+
             except Exception as e:
-                print(f"REST API attempt {attempt + 1} failed: {e}")
+                print(f"Groq API attempt {attempt + 1} failed: {e}")
                 if attempt == self.MAX_RETRIES - 1:
                     AIService._last_failure_time = time.time()
-                    return f"AI Service error (REST): {str(e)}"
-        
+                    return f"AI Service error: {str(e)}"
+
         return self._get_fallback_message()
 
     def _get_fallback_message(self):
         """Return a helpful static message when AI is unavailable."""
         return (
-            "📊 **AI Summary Temporarily Unavailable**\n\n"
-            "The AI analysis service is currently experiencing high demand. "
+            "<h3>AI Summary Temporarily Unavailable</h3>"
+            "<p>The AI analysis service is currently experiencing high demand. "
             "Your business metrics and KPIs are still being tracked accurately above. "
-            "Review your alerts panel for any immediate action items.\n\n"
-            "💡 *The AI summary will regenerate automatically on your next visit.*"
+            "Review your alerts panel for any immediate action items.</p>"
+            "<p><em>The AI summary will regenerate automatically on your next visit.</em></p>"
         )
 
     def generate_content(self, prompt, cache_key=None):
-        """Unified method for generating content via SDK or REST."""
+        """Unified method for generating content."""
         if not self.available:
             return self._get_fallback_message()
-        
+
         if cache_key and cache_key in self._cache:
             return self._cache[cache_key]
-        
+
         if self._is_in_cooldown():
             return self._get_fallback_message()
-        
-        result_text = ""
-        if self.use_sdk:
-            try:
-                result = self.client.models.generate_content(
-                    model=self.model_name,
-                    contents=[prompt]
-                )
-                AIService._last_failure_time = 0
-                result_text = result.text
-            except Exception as e:
-                error_str = str(e).lower()
-                if '429' in error_str or 'quota' in error_str or 'rate' in error_str:
-                    AIService._last_failure_time = time.time()
-                    print(f"SDK rate limited: {e}. Entering cooldown.")
-                    return self._get_fallback_message()
-                print(f"SDK call failed: {e}. Trying REST fallback.")
-                result_text = self._call_rest_api(prompt)
-        else:
-            result_text = self._call_rest_api(prompt)
-        
+
+        result_text = self._call_api(prompt)
+
         if cache_key and result_text and "Unavailable" not in result_text:
             self._cache[cache_key] = result_text
-            
+
         return result_text
 
     def generate_business_summary(self, snapshot, alerts):
         if not snapshot:
             return self._get_fallback_message()
-            
-        # Create a cache key based on snapshot ID and alert count to avoid redundant calls
+
         cache_key = f"summary_{snapshot.id}_{len(alerts)}"
-        
+
         alert_summary = "\n".join([f"- {a.message}" for a in alerts[:5]])
-        
+
         prompt = f"""
-        As a business advisor for a micro-business, analyze the following performance metrics and provide a concise, actionable summary.
+        As a business advisor for a micro-business in Pakistan, analyze the following performance metrics and provide a concise, actionable summary.
         
         Metrics:
         - Revenue Growth Rate: {snapshot.rgr:.2%}
@@ -189,9 +163,9 @@ class AIService:
         3. A motivational closing sentence.
         
         Format your response in beautiful, semantic HTML. Use tags like <h3>, <p>, <ul>, <li>, and <strong>. 
-        Do NOT wrap your response in markdown code blocks (e.g., no ```html). Just return the raw HTML string.
+        Do NOT wrap your response in markdown code blocks. Just return raw HTML.
         Keep it professional yet encouraging. Avoid making financial decisions, only provide explanations.
-        Keep your response under 150 words.
+        Keep your response under 150 words. All monetary values should be in PKR.
         """
-        
+
         return self.generate_content(prompt, cache_key=cache_key)
