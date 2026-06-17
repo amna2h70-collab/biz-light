@@ -1,31 +1,29 @@
-<<<<<<< HEAD
-# biz-light
-=======
-# Biz-ight 🚀
-### AI-Powered Decision Support & Automation Dashboard for Micro-Businesses
+# Biz-Light
 
-Biz-ight is a production-ready full-stack application designed to help micro and home-based businesses manage inventory, track finances, and get AI-driven insights.
+### AI-Powered Business Co-Manager for Micro-Businesses
+
+Biz-Light is a full-stack Django application designed to help micro and home-based businesses manage inventory, finances, alerts, and AI-driven insights in one place.
 
 ## Features
-- **Dashboard**: Real-time KPIs (BHS, RGR, ITR, ER, SCP) with trend visualizations.
-- **Inventory Management**: Product catalog with automated low-stock alerts.
-- **Financial Logging**: Simple interface for logging sales and expenses.
-- **Rule-Engine Automation**: Automatic alerts for inventory and financial anomalies.
-- **AI Explanation Layer**: Natural language summaries of business health using Gemini AI.
-- **Modular Architecture**: Clean Django MVC structure with MongoDB.
+- Dashboard with KPI tracking and trend summaries
+- Inventory management with stock and low-stock alerts
+- Finance logging for sales and expenses
+- Automation rules for generated alerts
+- AI explanation layer for business insights
+- Store integration support for syncing external sales data
 
 ## Tech Stack
-- **Backend**: Django 4.1, Djongo (MongoDB), Celery, Redis.
-- **Frontend**: Tailwind CSS, Chart.js, Django Templates.
-- **Database**: MongoDB Atlas.
-- **AI**: Google Gemini API.
+- Backend: Django, Celery, Redis
+- Frontend: Django templates, Tailwind CSS, Chart.js
+- Database: MongoDB via Djongo
+- AI: Google Gemini API
 
 ## Setup Instructions
 
 ### 1. Prerequisites
 - Python 3.10+
 - Redis (for Celery background jobs)
-- MongoDB account (URI provided in .env)
+- MongoDB account or local MongoDB setup
 
 ### 2. Installation
 1. Clone the repository.
@@ -33,46 +31,42 @@ Biz-ight is a production-ready full-stack application designed to help micro and
    ```bash
    pip install -r requirements.txt
    ```
-3. Configure the `.env` file (already provided with your credentials).
+3. Configure your environment variables in `.env`.
 
-### 3. Database & Seeding
-Run migrations and seed the database with demo data:
+### 3. Database & Seed Data
+Run migrations and seed demo data:
 ```bash
 python manage.py migrate
 python manage.py seed_data
 ```
 
 ### 4. Running the Application
-Start the Django development server:
+Start the Django server:
 ```bash
 python manage.py runserver
 ```
 
-In separate terminals, start the Celery worker and beat:
+Run Celery workers in separate terminals:
 ```bash
 celery -A biz_light worker -l info
 celery -A biz_light beat -l info
 ```
 
-### 5. Docker Setup (Alternative)
-If you have Docker installed:
+### 5. Docker Setup (Optional)
+If Docker is available:
 ```bash
 docker-compose up --build
 ```
 
 ## Folder Structure
-- `apps/`: Modular Django applications (dashboard, inventory, finance, etc.).
-- `biz_light/`: Project configuration and Celery setup.
-- `templates/`: Global and app-specific HTML templates.
-- `static/`: Frontend assets.
+- `apps/` — modular Django apps for dashboard, inventory, finance, automation, and accounts
+- `biz_light/` — project configuration and Celery setup
+- `templates/` — HTML templates for the web UI
+- `static/` — frontend static assets
 
+## Demo Credentials
+- Username: `demo`
+- Password: `demo1234`
 
-
-Username: demo
-Password: demo1234
-
-
-check the proposal.txt and check i all the requirement o the proect are done or not and tell me which needs to be implmented yet    also i have updated the new api key for gemini  its  still gives rate limit issue after retrying multiple times  it may be some other issue resolve it ---- also the alert in the dashboard and the alterpage are not update when i update the inventory they should update like done or resolved also all pages should be update according to the inomation 
-
-test every thing ater the changes and tell me if every thing is working fine
->>>>>>> eb8a424 (code).
+## Notes
+For the full project documentation and implementation status, see [PROJECT_DOCUMENTATION.md](PROJECT_DOCUMENTATION.md).
