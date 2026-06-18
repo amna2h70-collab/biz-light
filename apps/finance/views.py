@@ -79,25 +79,9 @@ def log_sale(request):
                 quantity=quantity,
                 total_amount=total
             )
-            Product.objects.filter(id=product.id).update(stock_level=product.stock_level - quantity)
             product.stock_level -= quantity
+            product.save(update_fields=['stock_level'])
             messages.success(request, f"Sale logged: {quantity}x {product.name}.")
-
-            # Create LOW_STOCK alert if stock dropped below reorder point
-            if product.stock_level <= product.reorder_point:
-                existing = list(Alert.objects.filter(
-                    user_id=request.user.id,
-                    type='LOW_STOCK',
-                    is_resolved__in=[False]
-                ))
-                already_exists = any(product.name in a.message for a in existing)
-                if not already_exists:
-                    Alert.objects.create(
-                        user_id=request.user.id,
-                        type='LOW_STOCK',
-                        message=f"Stock low for {product.name} ({product.stock_level} left). Reorder recommended.",
-                        severity='CRITICAL' if product.stock_level == 0 else 'HIGH' if product.stock_level <= product.reorder_point // 2 else 'MEDIUM',
-                    )
             
             # Refresh KPIs
             AnalyticsService.calculate_kpis(request.user)
@@ -153,8 +137,8 @@ def webhook_sale(request):
             quantity=quantity,
             total_amount=total
         )
-        Product.objects.filter(id=product.id).update(stock_level=product.stock_level - quantity)
         product.stock_level -= quantity
+        product.save(update_fields=['stock_level'])
         
         # Refresh KPIs
         AnalyticsService.calculate_kpis(user)

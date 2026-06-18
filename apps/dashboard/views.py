@@ -435,8 +435,8 @@ def sync_store_data(request):
                     t.timestamp = parsed_ts
                     t.save(update_fields=['timestamp'])
                     
-                Product.objects.filter(id=product.id).update(stock_level=product.stock_level - quantity)
                 product.stock_level -= quantity
+                product.save(update_fields=['stock_level'])
                 
                 synced_count += 1
                 

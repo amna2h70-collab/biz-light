@@ -6,39 +6,7 @@ from automation.models import Alert
 from dashboard.services import AnalyticsService
 
 
-def _resolve_alerts_for_product(user, product):
-    """Auto-resolve LOW_STOCK alerts when stock goes above reorder point."""
-    if product.stock_level > product.reorder_point:
-        # Find all unresolved LOW_STOCK alerts mentioning this product
-        unresolved = Alert.objects.filter(
-            user_id=user.id,
-            type='LOW_STOCK',
-            is_resolved__in=[False]
-        )
-        # Filter alerts that mention this product's name
-        for alert in unresolved:
-            if product.name in alert.message:
-                alert.is_resolved = True
-                alert.save()
-
-
-def _create_low_stock_alert(user, product):
-    """Create a LOW_STOCK alert if stock is at or below reorder point."""
-    if product.stock_level <= product.reorder_point:
-        # Check if there's already an unresolved alert for this product
-        existing = list(Alert.objects.filter(
-            user_id=user.id,
-            type='LOW_STOCK',
-            is_resolved__in=[False]
-        ))
-        already_exists = any(product.name in a.message for a in existing)
-        if not already_exists:
-            Alert.objects.create(
-                user_id=user.id,
-                type='LOW_STOCK',
-                message=f"Stock low for {product.name} ({product.stock_level} left). Reorder recommended.",
-                severity='CRITICAL' if product.stock_level == 0 else 'HIGH' if product.stock_level <= product.reorder_point // 2 else 'MEDIUM',
-            )
+# Helper functions for alert checking are now handled automatically by signals.py
 
 
 @login_required
@@ -68,8 +36,6 @@ def add_product(request):
                 reorder_point=int(request.POST['reorder_point'])
             )
             messages.success(request, f"Product '{product.name}' added successfully.")
-            # Check if the new product needs a low stock alert
-            _create_low_stock_alert(request.user, product)
             # Refresh KPIs immediately for dynamic dashboard
             AnalyticsService.calculate_kpis(request.user)
         except Exception as e:
@@ -84,16 +50,10 @@ def update_stock(request, pk):
         product = get_object_or_404(Product, pk=pk, user_id=request.user.id)
         try:
             new_stock = int(request.POST['stock_level'])
-            Product.objects.filter(pk=pk, user_id=request.user.id).update(stock_level=new_stock)
             product.stock_level = new_stock
+            product.save(update_fields=['stock_level'])
             messages.success(request, f"Stock updated for {product.name}.")
 
-            # Auto-resolve or create alerts based on new stock level
-            if product.stock_level > product.reorder_point:
-                _resolve_alerts_for_product(request.user, product)
-            else:
-                _create_low_stock_alert(request.user, product)
-            
             # Refresh KPIs
             AnalyticsService.calculate_kpis(request.user)
 

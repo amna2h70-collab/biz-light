@@ -9,6 +9,7 @@ class Alert(models.Model):
         ('HIGH', 'High'),
         ('CRITICAL', 'Critical'),
     )
+    product = models.ForeignKey('inventory.Product', on_delete=models.CASCADE, null=True, blank=True)
     type = models.CharField(max_length=50)  # e.g., 'LOW_STOCK', 'EXPENSE_SPIKE'
     message = models.TextField()
     severity = models.CharField(max_length=10, choices=SEVERITY_CHOICES)
