@@ -9,4 +9,5 @@ urlpatterns = [
     path('export-pdf/', views.export_pdf, name='export_pdf'),
     path('sync-store/', views.sync_store_data, name='sync_store'),
     path('integration/', views.integration_settings, name='integration'),
+    path('ai-summary/', views.fetch_ai_summary, name='ai_summary'),
 ]

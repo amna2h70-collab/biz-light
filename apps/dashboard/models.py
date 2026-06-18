@@ -34,7 +34,6 @@ class StoreIntegration(models.Model):
         ('custom', 'Custom API (WonderToyz / JSON Server)'),
         ('shopify', 'Shopify'),
         ('woocommerce', 'WooCommerce'),
-        ('daraz', 'Daraz'),
     ]
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='store_integration')

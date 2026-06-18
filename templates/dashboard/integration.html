@@ -33,7 +33,7 @@
 
             <div>
                 <label class="block text-sm font-bold text-zinc-700 mb-2">Platform Type</label>
-                <select name="platform_type" 
+                <select name="platform_type" id="platform-select"
                     class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all font-medium text-zinc-900 bg-white">
                     {% for value, label in platforms %}
                     <option value="{{ value }}" {% if integration.platform_type == value %}selected{% endif %}>{{ label }}</option>
@@ -52,10 +52,10 @@
 
             <div>
                 <label class="block text-sm font-bold text-zinc-700 mb-2">Secret API Key</label>
-                <input type="password" name="api_key" value="{{ integration.api_key|default:'' }}" 
+                <input type="password" name="api_key" id="api-key-input" value="{{ integration.api_key|default:'' }}" 
                     class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all font-medium text-zinc-900"
                     placeholder="Enter your store's secure API Key" required>
-                <p class="text-xs text-zinc-400 mt-2 font-medium">Find this in your store's Developer Settings or Admin Panel.</p>
+                <p id="api-key-helper" class="text-xs text-zinc-400 mt-2 font-medium">Find this in your store's Developer Settings or Admin Panel.</p>
             </div>
 
             <div class="pt-4 border-t border-zinc-100 flex items-center justify-between">
@@ -102,4 +102,30 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const platformSelect = document.getElementById('platform-select');
+        const apiKeyInput = document.getElementById('api-key-input');
+        const apiKeyHelper = document.getElementById('api-key-helper');
+        
+        function updateHints() {
+            const platform = platformSelect.value;
+            if (platform === 'custom') {
+                apiKeyInput.placeholder = "Not required. Type 'none'.";
+                apiKeyHelper.textContent = "Custom JSON APIs only require the URL above. Enter 'none' here.";
+            } else if (platform === 'woocommerce') {
+                apiKeyInput.placeholder = "consumer_key:consumer_secret";
+                apiKeyHelper.textContent = "Enter your WooCommerce keys separated by a colon (:).";
+            } else if (platform === 'shopify') {
+                apiKeyInput.placeholder = "shpat_xxxxxxxxxxxxxxx";
+                apiKeyHelper.textContent = "Enter your Shopify Admin API Access Token (usually starts with shpat_).";
+            }
+        }
+
+        platformSelect.addEventListener('change', updateHints);
+        // Run once on page load to set initial state
+        updateHints();
+    });
+</script>
 {% endblock %}

@@ -38,22 +38,9 @@ def index(request):
                 print(f"KPI calculation failed in view: {calc_err}")
                 # Fallback to existing snapshot if calculation fails
         
-        if latest_snapshot and not latest_snapshot.ai_summary:
-            try:
-                from ai_layer.services import AIService
-                ai_service = AIService()
-                active_alerts = list(Alert.objects.filter(user_id=request.user.id, is_resolved__in=[False]).order_by('-timestamp')[:5])
-                ai_summary_text = ai_service.generate_business_summary(
-                    latest_snapshot, 
-                    active_alerts
-                )
-                KPISnapshot.objects.filter(id=latest_snapshot.id).update(ai_summary=ai_summary_text)
-                latest_snapshot.ai_summary = ai_summary_text
-            except Exception as ai_err:
-                print(f"AI Summary generation failed: {ai_err}")
-                latest_snapshot.ai_summary = "AI analysis is currently being updated. Please check back in a moment."
-                # Don't save the error message permanently, just show it
-        
+        # NOTE: AI summary is now loaded asynchronously via /dashboard/ai-summary/
+        # This prevents the Groq API call from blocking page load.
+
         # Get recent snapshots for charts (latest 1 per day for last 7 days)
         snapshots_qs = KPISnapshot.objects.filter(user_id=request.user.id).order_by('-timestamp')
         unique_daily_snapshots = []
@@ -316,6 +303,33 @@ def export_pdf(request):
     
     return response
 
+
+@login_required
+def fetch_ai_summary(request):
+    """
+    Async endpoint: called by JS on page load to load the AI summary without
+    blocking the dashboard render.  Returns JSON with the generated HTML.
+    """
+    from django.http import JsonResponse as _JsonResponse
+    try:
+        snapshot = KPISnapshot.objects.filter(user_id=request.user.id).order_by('-timestamp').first()
+        if not snapshot:
+            return _JsonResponse({'html': '<p class="text-zinc-400">No business data yet. Add products and log some sales to generate your AI summary.</p>'})
+
+        # Return cached summary if it already exists
+        if snapshot.ai_summary:
+            return _JsonResponse({'html': snapshot.ai_summary})
+
+        # Generate fresh summary
+        from ai_layer.services import AIService
+        ai_service = AIService()
+        active_alerts = list(Alert.objects.filter(user_id=request.user.id, is_resolved__in=[False]).order_by('-timestamp')[:5])
+        ai_summary_text = ai_service.generate_business_summary(snapshot, active_alerts)
+        KPISnapshot.objects.filter(id=snapshot.id).update(ai_summary=ai_summary_text)
+        return _JsonResponse({'html': ai_summary_text})
+    except Exception as e:
+        return _JsonResponse({'html': f'<p class="text-zinc-400">AI analysis is temporarily unavailable.</p>'}, status=200)
+
 import requests
 from finance.models import Transaction
 from inventory.models import Product
@@ -393,10 +407,7 @@ def sync_store_data(request):
         elif platform == 'woocommerce':
             orders = _fetch_woocommerce_orders(store_url, api_key)
         elif platform == 'shopify':
-            orders = _fetch_shopify_orders(store_url, api_key)
-        elif platform == 'daraz':
-            messages.info(request, "Daraz integration is coming soon.")
-            return redirect('dashboard:index')
+            orders = _fetch_shopify_orders(store_url, api_key, user=request.user)
         
         # ── Process normalized orders ───────────────────────────
         synced_count = 0
@@ -512,23 +523,53 @@ def _fetch_woocommerce_orders(store_url, api_key):
     return normalized
 
 
-def _fetch_shopify_orders(store_url, api_key):
+def _fetch_shopify_orders(store_url, api_key, user=None):
     """
     Adapter for Shopify Admin REST API.
     store_url = e.g. https://mystore.myshopify.com
     api_key   = Shopify Admin API access token
+
+    DEMO / VIVA MODE:
+    Set api_key to 'mock' (or include 'mock' in the store URL) to run a
+    simulation without a real Shopify store.  The adapter will return one
+    synthetic order per product already in the user's inventory so the sync
+    flow can be demonstrated end-to-end during evaluation.
     """
+    # ── Mock / demo mode ─────────────────────────────────────────
+    if api_key.strip().lower() == 'mock' or 'mock' in store_url.lower():
+        normalized = []
+        if user is not None:
+            from inventory.models import Product as _Product
+            from django.utils import timezone as _tz
+            import datetime as _dt
+
+            products = list(_Product.objects.filter(user_id=user.id))
+            mock_ts = (_tz.now() - _dt.timedelta(hours=1)).isoformat()
+            for p in products:
+                if p.stock_level > 0:          # only sell items that are in stock
+                    normalized.append({
+                        'id': f'mock_{p.sku}',
+                        'sku': p.sku,
+                        'name': p.name,
+                        'price': p.price,
+                        'quantity': 1,
+                        'status': 'Pending',
+                        'timestamp': mock_ts,
+                    })
+        return normalized
+
+    # ── Live Shopify Admin REST API ───────────────────────────────
     normalized = []
-    
+
     base = store_url.rstrip('/')
     url = f"{base}/admin/api/2024-01/orders.json"
     params = {'status': 'open', 'limit': 50}
     headers = {'X-Shopify-Access-Token': api_key}
-    
+
     response = requests.get(url, params=params, headers=headers, timeout=15)
     response.raise_for_status()
     shopify_data = response.json()
-    
+
     for order in shopify_data.get('orders', []):
         for item in order.get('line_items', []):
             normalized.append({
@@ -538,7 +579,8 @@ def _fetch_shopify_orders(store_url, api_key):
                 'price': float(item.get('price', 0)),
                 'quantity': item.get('quantity', 1),
                 'status': 'Pending',
+                'timestamp': order.get('created_at', ''),
             })
-    
+
     return normalized
 

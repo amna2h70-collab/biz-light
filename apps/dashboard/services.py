@@ -52,19 +52,21 @@ class AnalyticsService:
         rgr = ((current_sales - prev_sales) / prev_sales) if prev_sales > 0 else 0
 
         # 2. Inventory Turnover Ratio (ITR)
-        # COGS calculation (Manual for Djongo compatibility)
-        sales = Transaction.objects.filter(user_id=user.id, type='SALE', timestamp__gte=period_start, timestamp__lte=now)
+        # Pre-fetch all user products into a dict to avoid N+1 queries
+        products = Product.objects.filter(user_id=user.id)
+        product_cost_map = {p.id: p.cost for p in products}
+        product_data = list(products.values_list('stock_level', 'cost'))
+
+        sales = Transaction.objects.filter(
+            user_id=user.id, type='SALE', timestamp__gte=period_start, timestamp__lte=now
+        ).values('product_id', 'quantity')
+
         cogs = 0
         for s in sales:
-            try:
-                # Access related fields carefully in Djongo
-                cogs += (s.product.cost * s.quantity)
-            except Exception:
-                continue
+            cost = product_cost_map.get(s['product_id'], 0)
+            cogs += cost * s['quantity']
 
-        # Manual calculation for average inventory value (Djongo compatible)
-        products = Product.objects.filter(user_id=user.id)
-        product_data = list(products.values_list('stock_level', 'cost'))
+        # Average inventory value
         total_value = sum(level * cost for level, cost in product_data)
         avg_inventory_value = total_value / len(product_data) if len(product_data) > 0 else 1
         
@@ -82,9 +84,8 @@ class AnalyticsService:
         # total_stock calculation
         total_stock = sum(p[0] for p in product_data)
         
-        # total_sales_qty calculation
-        sales_qty_data = sales.values_list('quantity', flat=True)
-        total_sales_qty = sum(sales_qty_data)
+        # total_sales_qty calculation (sales is .values() queryset, use dict access)
+        total_sales_qty = sum(s['quantity'] for s in sales)
         
         avg_daily_sales_qty = float(total_sales_qty) / days_in_period
         scp = float(total_stock) / avg_daily_sales_qty if avg_daily_sales_qty > 0 else 999
@@ -190,21 +191,25 @@ class AnalyticsService:
 
         # Rule 4: Expense Spike Warning
         if snapshot.er > er_spike_threshold:
-            Alert.objects.create(
-                user_id=user.id,
-                type='EXPENSE_SPIKE',
-                message=f"High expense ratio detected: {snapshot.er:.2%}. Review your recent spending to improve margins.",
-                severity='HIGH',
-            )
+            already_exists = any(a.type == 'EXPENSE_SPIKE' for a in existing_alerts)
+            if not already_exists:
+                Alert.objects.create(
+                    user_id=user.id,
+                    type='EXPENSE_SPIKE',
+                    message=f"High expense ratio detected: {snapshot.er:.2%}. Review your recent spending to improve margins.",
+                    severity='HIGH',
+                )
 
         # Rule 5: Sales Decline Alert
         if snapshot.rgr < rgr_decline_threshold:
-            Alert.objects.create(
-                user_id=user.id,
-                type='SALES_DECLINE',
-                message=f"Sales dropped by {abs(snapshot.rgr):.2%} compared to last period. Consider promotional strategies.",
-                severity='MEDIUM',
-            )
+            already_exists = any(a.type == 'SALES_DECLINE' for a in existing_alerts)
+            if not already_exists:
+                Alert.objects.create(
+                    user_id=user.id,
+                    type='SALES_DECLINE',
+                    message=f"Sales dropped by {abs(snapshot.rgr):.2%} compared to last period. Consider promotional strategies.",
+                    severity='MEDIUM',
+                )
 
         # Rule 6: Pricing Recommendation
         for p in products:

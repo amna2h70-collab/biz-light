@@ -155,10 +155,18 @@
                             </svg>
                         </div>
                         Strategic Insight
+                        <span id="ai-loading-badge" class="ml-auto text-[10px] font-bold bg-sky-500/20 text-sky-300 px-2 py-0.5 rounded-full animate-pulse">Generating…</span>
                     </h3>
-                    <div class="text-zinc-400 leading-relaxed space-y-4 overflow-y-auto max-h-[300px] pr-2">
-                        {{ snapshot.ai_summary|safe }}
+                    <!-- Skeleton loader shown while AI content loads -->
+                    <div id="ai-skeleton" class="space-y-3">
+                        <div class="h-3 bg-white/10 rounded-full w-full animate-pulse"></div>
+                        <div class="h-3 bg-white/10 rounded-full w-5/6 animate-pulse"></div>
+                        <div class="h-3 bg-white/10 rounded-full w-4/6 animate-pulse"></div>
+                        <div class="h-3 bg-white/10 rounded-full w-full animate-pulse mt-4"></div>
+                        <div class="h-3 bg-white/10 rounded-full w-3/4 animate-pulse"></div>
                     </div>
+                    <!-- AI content injected here by JS -->
+                    <div id="ai-summary-content" class="text-zinc-400 leading-relaxed space-y-4 overflow-y-auto max-h-[300px] pr-2 hidden"></div>
                 </div>
             </div>
 
@@ -748,6 +756,37 @@
         }
         financialChart.update();
     };
+
+    // ── Async AI Summary Loader ──────────────────────────────────────────────
+    // Page renders instantly; AI content is fetched in the background so the
+    // Groq API call never blocks navigation.
+    (function loadAISummary() {
+        const skeleton = document.getElementById('ai-skeleton');
+        const content  = document.getElementById('ai-summary-content');
+        const badge    = document.getElementById('ai-loading-badge');
+
+        fetch("{% url 'dashboard:ai_summary' %}", {
+            method: 'GET',
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            if (skeleton) skeleton.classList.add('hidden');
+            if (badge)    badge.classList.add('hidden');
+            if (content) {
+                content.innerHTML = data.html || '';
+                content.classList.remove('hidden');
+            }
+        })
+        .catch(function() {
+            if (skeleton) skeleton.classList.add('hidden');
+            if (badge)    badge.classList.add('hidden');
+            if (content) {
+                content.innerHTML = '<p class="text-zinc-500 text-sm">AI summary unavailable right now.</p>';
+                content.classList.remove('hidden');
+            }
+        });
+    })();
 </script>
 {% endlocalize %}
 {% endblock %}
