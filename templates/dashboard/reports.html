@@ -8,13 +8,13 @@
     <!-- Header -->
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-            <h1 class="text-3xl font-black text-zinc-950 tracking-tight">Report Archive</h1>
-            <p class="text-zinc-500 mt-1">Historical AI-analyzed business performance snapshots.</p>
+            <h1 class="text-3xl font-black text-slate-900 tracking-tight">Report Archive</h1>
+            <p class="text-slate-500 mt-1">Historical AI-analyzed business performance snapshots.</p>
         </div>
         <div class="flex flex-wrap items-center gap-2">
             <span
-                class="bg-zinc-100 text-zinc-500 text-[10px] font-black px-3 py-1.5 rounded-lg uppercase tracking-widest">{{ snapshots|length }} Reports</span>
-            <div class="flex items-center bg-zinc-950 rounded-xl p-1 shadow-xl shadow-zinc-200 ml-4">
+                class="bg-slate-100 text-slate-500 text-[10px] font-black px-3 py-1.5 rounded-lg uppercase tracking-widest">{{ snapshots|length }} Reports</span>
+            <div class="flex items-center bg-white border-slate-200 rounded-xl p-1 shadow-xl shadow-zinc-200 ml-4">
                 <a href="{% url 'dashboard:reports' %}?generate=true"
                     class="text-white px-4 py-1.5 rounded-lg text-xs font-bold bg-white/20 transition-all hover:bg-white/30">
                     Generate Report
@@ -27,21 +27,21 @@
     <div class="space-y-6">
         {% for s in snapshots %}
         <div
-            class="bg-white rounded-[2rem] border border-zinc-200/60 shadow-sm overflow-hidden p-6 md:p-8 flex flex-col lg:flex-row gap-8 hover:shadow-lg transition-all">
+            class="bg-white rounded-[2rem] border border-slate-200/60 shadow-sm overflow-hidden p-6 md:p-8 flex flex-col lg:flex-row gap-8 hover:shadow-lg transition-all">
 
             <!-- Date & Health Score -->
             <div
                 class="flex flex-row lg:flex-col items-center justify-between lg:justify-center lg:min-w-[160px] border-b lg:border-b-0 lg:border-r border-zinc-100 pb-6 lg:pb-0 lg:pr-8">
                 <div class="text-left lg:text-center">
-                    <span class="block text-lg md:text-xl font-black text-zinc-950">{{ s.timestamp|date:"M d, Y" }}</span>
+                    <span class="block text-lg md:text-xl font-black text-slate-900">{{ s.timestamp|date:"M d, Y" }}</span>
                     <div class="mt-2 flex items-center justify-start lg:justify-center gap-2">
                         <span
                             class="text-[10px] font-bold text-sky-500 bg-sky-50 px-2 py-0.5 rounded uppercase tracking-widest">{{ s.report_type }}</span>
-                        <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">{{ s.timestamp|date:"H:i" }}</span>
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{{ s.timestamp|date:"H:i" }}</span>
                     </div>
                 </div>
                 <div class="flex flex-col items-center ml-4 lg:ml-0 lg:mt-6">
-                    <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-2">Health Score</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Health Score</span>
                     <div
                         class="inline-flex items-center justify-center w-14 h-14 rounded-2xl {% if s.bhs > 70 %}bg-emerald-50 text-emerald-600{% elif s.bhs > 40 %}bg-amber-50 text-amber-600{% else %}bg-red-50 text-red-600{% endif %} font-black text-xl shadow-sm">
                         {{ s.bhs|floatformat:0 }}
@@ -54,68 +54,68 @@
 
                 <div class="flex flex-col group">
                     <span
-                        class="text-xs font-black text-zinc-950 uppercase tracking-widest mb-1 flex items-center gap-1.5">
+                        class="text-xs font-black text-slate-900 uppercase tracking-widest mb-1 flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                         Total Revenue
                     </span>
                     <span class="text-xl md:text-2xl font-black text-emerald-600">PKR {{ s.total_revenue|default_if_none:"0"|floatformat:0 }}</span>
-                    <p class="text-[10px] font-semibold text-zinc-400 mt-1 leading-snug">Total money brought in from
+                    <p class="text-[10px] font-semibold text-slate-400 mt-1 leading-snug">Total money brought in from
                         sales today.</p>
                 </div>
 
                 <div class="flex flex-col group">
                     <span
-                        class="text-xs font-black text-zinc-950 uppercase tracking-widest mb-1 flex items-center gap-1.5">
+                        class="text-xs font-black text-slate-900 uppercase tracking-widest mb-1 flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
                         Net Profit
                     </span>
                     <span class="text-xl md:text-2xl font-black text-sky-600">PKR {{ s.net_profit|default_if_none:"0"|floatformat:0 }}</span>
-                    <p class="text-[10px] font-semibold text-zinc-400 mt-1 leading-snug">Take-home money after deducting
+                    <p class="text-[10px] font-semibold text-slate-400 mt-1 leading-snug">Take-home money after deducting
                         cost of goods and expenses.</p>
                 </div>
 
                 <div class="flex flex-col group">
                     <span
-                        class="text-xs font-black text-zinc-950 uppercase tracking-widest mb-1 flex items-center gap-1.5">
+                        class="text-xs font-black text-slate-900 uppercase tracking-widest mb-1 flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
                         Rev Growth
                     </span>
                     <span class="text-xl md:text-2xl font-black text-zinc-800">{{ s.rgr_percentage|floatformat:1 }}%</span>
-                    <p class="text-[10px] font-semibold text-zinc-400 mt-1 leading-snug">Sales increase/decrease
+                    <p class="text-[10px] font-semibold text-slate-400 mt-1 leading-snug">Sales increase/decrease
                         compared to the previous day.</p>
                 </div>
 
                 <div class="flex flex-col group">
                     <span
-                        class="text-xs font-black text-zinc-950 uppercase tracking-widest mb-1 flex items-center gap-1.5">
+                        class="text-xs font-black text-slate-900 uppercase tracking-widest mb-1 flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
                         Stock Turnover
                     </span>
                     <span class="text-xl md:text-2xl font-black text-zinc-800">{{ s.itr|floatformat:2 }}x</span>
-                    <p class="text-[10px] font-semibold text-zinc-400 mt-1 leading-snug">How efficiently you sell and
+                    <p class="text-[10px] font-semibold text-slate-400 mt-1 leading-snug">How efficiently you sell and
                         replace your inventory.</p>
                 </div>
 
                 <div class="flex flex-col group">
                     <span
-                        class="text-xs font-black text-zinc-950 uppercase tracking-widest mb-1 flex items-center gap-1.5">
+                        class="text-xs font-black text-slate-900 uppercase tracking-widest mb-1 flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
                         Expense Ratio
                     </span>
                     <span class="text-xl md:text-2xl font-black text-zinc-800">{{ s.er_percentage|floatformat:1 }}%</span>
-                    <p class="text-[10px] font-semibold text-zinc-400 mt-1 leading-snug">Percentage of revenue consumed
+                    <p class="text-[10px] font-semibold text-slate-400 mt-1 leading-snug">Percentage of revenue consumed
                         by operating expenses. Lower is better.</p>
                 </div>
 
                 <div class="flex flex-col group">
                     <span
-                        class="text-xs font-black text-zinc-950 uppercase tracking-widest mb-1 flex items-center gap-1.5">
+                        class="text-xs font-black text-slate-900 uppercase tracking-widest mb-1 flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
                         Stock Runway
                     </span>
                     <span class="text-xl md:text-2xl font-black text-zinc-800">{{ s.scp|floatformat:0 }}<span
-                            class="text-sm font-bold text-zinc-400 ml-1">days</span></span>
-                    <p class="text-[10px] font-semibold text-zinc-400 mt-1 leading-snug">Estimated days until you
+                            class="text-sm font-bold text-slate-400 ml-1">days</span></span>
+                    <p class="text-[10px] font-semibold text-slate-400 mt-1 leading-snug">Estimated days until you
                         completely run out of stock.</p>
                 </div>
 
@@ -125,7 +125,7 @@
             <div
                 class="w-full lg:w-[30%] border-t lg:border-t-0 lg:border-l border-zinc-100 pt-6 lg:pt-0 lg:pl-8 flex flex-col justify-center">
                 <span
-                    class="text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                    class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
                     <svg class="w-4 h-4 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M13 10V3L4 14h7v7l9-11h-7z"></path>
@@ -134,7 +134,7 @@
                 </span>
 
                 {% if s.ai_summary %}
-                <div class="text-xs text-zinc-600 line-clamp-4 leading-relaxed font-medium">
+                <div class="text-xs text-slate-600 line-clamp-4 leading-relaxed font-medium">
                     {{ s.ai_summary|striptags }}
                 </div>
                 <button onclick="showModal('{{ s.id }}')"
@@ -147,19 +147,19 @@
 
                 <!-- Modal -->
                 <div id="modal-{{ s.id }}"
-                    class="hidden fixed inset-0 bg-zinc-950/60 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
+                    class="hidden fixed inset-0 bg-white border-slate-200/60 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
                     <div class="bg-white rounded-[2rem] max-w-2xl w-full p-8 shadow-2xl relative overflow-hidden">
                         <div
                             class="absolute top-0 right-0 w-32 h-32 bg-sky-500/10 rounded-full blur-[60px] -mr-16 -mt-16">
                         </div>
                         <div class="flex items-center justify-between mb-8 relative z-10">
                             <div>
-                                <h3 class="text-2xl font-black text-zinc-950 tracking-tight">AI Summary</h3>
-                                <p class="text-sm font-bold text-zinc-500 mt-1">{{ s.timestamp|date:"M d, Y" }} Analysis
+                                <h3 class="text-2xl font-black text-slate-900 tracking-tight">AI Summary</h3>
+                                <p class="text-sm font-bold text-slate-500 mt-1">{{ s.timestamp|date:"M d, Y" }} Analysis
                                 </p>
                             </div>
                             <button onclick="hideModal('{{ s.id }}')"
-                                class="p-2 bg-zinc-100 hover:bg-zinc-200 text-zinc-600 rounded-full transition-colors">
+                                class="p-2 bg-slate-100 hover:bg-zinc-200 text-slate-600 rounded-full transition-colors">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M6 18L18 6M6 6l12 12"></path>
@@ -174,12 +174,12 @@
                 </div>
                 {% else %}
                 <div class="flex flex-col items-center justify-center h-full opacity-40 py-4">
-                    <svg class="w-8 h-8 mb-2 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-8 h-8 mb-2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z">
                         </path>
                     </svg>
-                    <span class="text-[10px] font-bold text-zinc-600 text-center uppercase tracking-widest">No Analysis
+                    <span class="text-[10px] font-bold text-slate-600 text-center uppercase tracking-widest">No Analysis
                         Generated</span>
                 </div>
                 {% endif %}
@@ -187,14 +187,14 @@
 
         </div>
         {% empty %}
-        <div class="bg-white rounded-[2rem] border border-zinc-200/60 p-20 text-center">
+        <div class="bg-white rounded-[2rem] border border-slate-200/60 p-20 text-center">
             <div class="opacity-30 flex flex-col items-center">
-                <svg class="w-16 h-16 mb-4 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-16 h-16 mb-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
                     </path>
                 </svg>
-                <h3 class="text-xl font-black text-zinc-950">No Reports Yet</h3>
+                <h3 class="text-xl font-black text-slate-900">No Reports Yet</h3>
                 <p class="text-sm font-bold mt-1">Snapshots will appear here as your business grows.</p>
             </div>
         </div>
