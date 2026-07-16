@@ -400,7 +400,7 @@
     const healthDailyData = {
         labels: [{% for s in snapshots %}"{{ s.timestamp|date:'M d' }}"{% if not forloop.last %}, {% endif %} {% endfor %}],
     datasets: [{
-        label: 'Health Score',
+        label: 'HEALTH SCORE',
         data: [{% for s in snapshots %}{{ s.bhs }}{% if not forloop.last %}, {% endif %} {% endfor %}],
     borderColor: '#0ea5e9',
         borderWidth: 4,
@@ -421,7 +421,7 @@
         data: [{% for s in monthly_snapshots %}{{ s.bhs }}{% if not forloop.last %}, {% endif %} {% endfor %}],
     borderColor: '#0ea5e9',
         borderWidth: 4,
-            pointBackgroundColor: '#ffffff',
+            pointBackgroundColor: '#8B5CF6',
                 pointBorderColor: '#0ea5e9',
                     pointBorderWidth: 2,
                         pointRadius: 4,
