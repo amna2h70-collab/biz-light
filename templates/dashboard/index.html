@@ -520,7 +520,7 @@
         labels: [{% for s in monthly_snapshots %}"{{ s.timestamp|date:'M Y' }}"{% if not forloop.last %}, {% endif %} {% endfor %}],
     datasets: [
         {
-            label: 'Inventory Turnover',
+            label: 'INVENTORY TURNOVER RATIO',
             data: [{% for s in monthly_snapshots %}{{ s.itr|floatformat:2}}{% if not forloop.last %}, {% endif %} {% endfor %}],
     borderColor: '#6366f1',
         borderWidth: 3,
